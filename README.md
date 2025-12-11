@@ -3,10 +3,10 @@ Paradigm PDF Analyzer | Professional Edition
 
 **Paradigm** is a client-side, browser-based PDF analysis tool designed for semantic field detection, layout estimation, and form digitization. It runs entirely in the browser using WebAssembly (via PDF.js) and requires no backend server.
 
-?? Features
+🚀 Features
 -----------
 
-### ?? Semantic Intelligence
+### 🧠 Semantic Intelligence
 
 -   **Deep Layout Engine**: distinguishing between vector geometry (lines/boxes) and text nodes.
 
@@ -14,7 +14,7 @@ Paradigm PDF Analyzer | Professional Edition
 
 -   **Smart Context**: Links underscore lines (`______`) to their preceding text labels.
 
-### ??? Interface & Visualization
+### 🖥️ Interface & Visualization
 
 -   **HUD Visualizer**: Overlays detected fields and metadata directly onto the PDF canvas.
 
@@ -24,7 +24,7 @@ Paradigm PDF Analyzer | Professional Edition
 
 -   **Touch & Swipe**: Native touch support for navigating pages on mobile/tablet devices.
 
-### ?? Data & Export
+### 📊 Data & Export
 
 -   **Page Intel**: Live metrics on page dimensions, permissions, and text density.
 
@@ -32,7 +32,7 @@ Paradigm PDF Analyzer | Professional Edition
 
 -   **JSON Data Stream**: Full access to the raw analysis payload (Fields, Vectors, Text, Layout).
 
-??? Quick Start
+🛠️ Quick Start
 ---------------
 
 ### Option 1: Run Locally
@@ -53,7 +53,7 @@ Paradigm PDF Analyzer | Professional Edition
 
 4.  Your analyzer will be live at `https://<your-username>.github.io/<repo-name>/analyzer.html`.
 
-?? Data Payload Structure
+📦 Data Payload Structure
 -------------------------
 
 The analyzer outputs a structured JSON payload organized by page:
@@ -83,7 +83,7 @@ The analyzer outputs a structured JSON payload organized by page:
 
 ```
 
-??? Tech Stack
+🏗️ Tech Stack
 --------------
 
 -   **Core**: HTML5, Vanilla JavaScript (ES6+)
@@ -96,7 +96,7 @@ The analyzer outputs a structured JSON payload organized by page:
 
 -   **Fonts**: Inter (Google Fonts)
 
-?? License
+📄 License
 ----------
 
 This project is open-source and available under the [MIT License](https://www.google.com/search?q=LICENSE "null").
