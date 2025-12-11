@@ -1,0 +1,908 @@
+<!DOCTYPE html><html lang="en"><head>
+
+<script class="injected-ffc2e83d85">
+(function(){'use strict';function q(b){var c=0;return function(){return c<b.length?{done:!1,value:b[c++]}:{done:!0}}}function t(b){var c=typeof Symbol!="undefined"&&Symbol.iterator&&b[Symbol.iterator];if(c)return c.call(b);if(typeof b.length=="number")return{next:q(b)};throw Error(String(b)+" is not an iterable or ArrayLike");}var u=typeof Object.defineProperties=="function"?Object.defineProperty:function(b,c,g){if(b==Array.prototype||b==Object.prototype)return b;b[c]=g.value;return b};
+function v(b){b=["object"==typeof globalThis&&globalThis,b,"object"==typeof window&&window,"object"==typeof self&&self,"object"==typeof global&&global];for(var c=0;c<b.length;++c){var g=b[c];if(g&&g.Math==Math)return g}throw Error("Cannot find global object");}var w=v(this);function x(b,c){if(c)a:{var g=w;b=b.split(".");for(var h=0;h<b.length-1;h++){var l=b[h];if(!(l in g))break a;g=g[l]}b=b[b.length-1];h=g[b];c=c(h);c!=h&&c!=null&&u(g,b,{configurable:!0,writable:!0,value:c})}}
+function y(){this.j=!1;this.g=null;this.u=void 0;this.h=1;this.v=this.l=0;this.i=null}function z(b){if(b.j)throw new TypeError("Generator is already running");b.j=!0}y.prototype.o=function(b){this.u=b};function A(b,c){b.i={I:c,J:!0};b.h=b.l||b.v}y.prototype.return=function(b){this.i={return:b};this.h=this.v};function B(b){this.g=new y;this.h=b}function E(b,c){z(b.g);var g=b.g.g;if(g)return F(b,"return"in g?g["return"]:function(h){return{value:h,done:!0}},c,b.g.return);b.g.return(c);return G(b)}
+function F(b,c,g,h){try{var l=c.call(b.g.g,g);if(!(l instanceof Object))throw new TypeError("Iterator result "+l+" is not an object");if(!l.done)return b.g.j=!1,l;var m=l.value}catch(f){return b.g.g=null,A(b.g,f),G(b)}b.g.g=null;h.call(b.g,m);return G(b)}function G(b){for(;b.g.h;)try{var c=b.h(b.g);if(c)return b.g.j=!1,{value:c.value,done:!1}}catch(g){b.g.u=void 0,A(b.g,g)}b.g.j=!1;if(b.g.i){c=b.g.i;b.g.i=null;if(c.J)throw c.I;return{value:c.return,done:!0}}return{value:void 0,done:!0}}
+function H(b){this.next=function(c){z(b.g);b.g.g?c=F(b,b.g.g.next,c,b.g.o):(b.g.o(c),c=G(b));return c};this.throw=function(c){z(b.g);b.g.g?c=F(b,b.g.g["throw"],c,b.g.o):(A(b.g,c),c=G(b));return c};this.return=function(c){return E(b,c)};this[Symbol.iterator]=function(){return this}}function I(b){function c(h){return b.next(h)}function g(h){return b.throw(h)}return new Promise(function(h,l){function m(f){f.done?h(f.value):Promise.resolve(f.value).then(c,g).then(m,l)}m(b.next())})}
+x("Symbol",function(b){function c(m){if(this instanceof c)throw new TypeError("Symbol is not a constructor");return new g(h+(m||"")+"_"+l++,m)}function g(m,f){this.g=m;u(this,"description",{configurable:!0,writable:!0,value:f})}if(b)return b;g.prototype.toString=function(){return this.g};var h="jscomp_symbol_"+(Math.random()*1E9>>>0)+"_",l=0;return c});
+x("Symbol.iterator",function(b){if(b)return b;b=Symbol("Symbol.iterator");u(Array.prototype,b,{configurable:!0,writable:!0,value:function(){return J(q(this))}});return b});function J(b){b={next:b};b[Symbol.iterator]=function(){return this};return b}
+x("Promise",function(b){function c(f){this.h=0;this.i=void 0;this.g=[];this.u=!1;var a=this.j();try{f(a.resolve,a.reject)}catch(d){a.reject(d)}}function g(){this.g=null}function h(f){return f instanceof c?f:new c(function(a){a(f)})}if(b)return b;g.prototype.h=function(f){if(this.g==null){this.g=[];var a=this;this.i(function(){a.l()})}this.g.push(f)};var l=w.setTimeout;g.prototype.i=function(f){l(f,0)};g.prototype.l=function(){for(;this.g&&this.g.length;){var f=this.g;this.g=[];for(var a=0;a<f.length;++a){var d=
+f[a];f[a]=null;try{d()}catch(e){this.j(e)}}}this.g=null};g.prototype.j=function(f){this.i(function(){throw f;})};c.prototype.j=function(){function f(e){return function(k){d||(d=!0,e.call(a,k))}}var a=this,d=!1;return{resolve:f(this.D),reject:f(this.l)}};c.prototype.D=function(f){if(f===this)this.l(new TypeError("A Promise cannot resolve to itself"));else if(f instanceof c)this.G(f);else{a:switch(typeof f){case "object":var a=f!=null;break a;case "function":a=!0;break a;default:a=!1}a?this.C(f):this.o(f)}};
+c.prototype.C=function(f){var a=void 0;try{a=f.then}catch(d){this.l(d);return}typeof a=="function"?this.H(a,f):this.o(f)};c.prototype.l=function(f){this.v(2,f)};c.prototype.o=function(f){this.v(1,f)};c.prototype.v=function(f,a){if(this.h!=0)throw Error("Cannot settle("+f+", "+a+"): Promise already settled in state"+this.h);this.h=f;this.i=a;this.h===2&&this.F();this.K()};c.prototype.F=function(){var f=this;l(function(){if(f.B()){var a=w.console;typeof a!=="undefined"&&a.error(f.i)}},1)};c.prototype.B=
+function(){if(this.u)return!1;var f=w.CustomEvent,a=w.Event,d=w.dispatchEvent;if(typeof d==="undefined")return!0;typeof f==="function"?f=new f("unhandledrejection",{cancelable:!0}):typeof a==="function"?f=new a("unhandledrejection",{cancelable:!0}):(f=w.document.createEvent("CustomEvent"),f.initCustomEvent("unhandledrejection",!1,!0,f));f.promise=this;f.reason=this.i;return d(f)};c.prototype.K=function(){if(this.g!=null){for(var f=0;f<this.g.length;++f)m.h(this.g[f]);this.g=null}};var m=new g;c.prototype.G=
+function(f){var a=this.j();f.A(a.resolve,a.reject)};c.prototype.H=function(f,a){var d=this.j();try{f.call(a,d.resolve,d.reject)}catch(e){d.reject(e)}};c.prototype.then=function(f,a){function d(n,r){return typeof n=="function"?function(C){try{e(n(C))}catch(D){k(D)}}:r}var e,k,p=new c(function(n,r){e=n;k=r});this.A(d(f,e),d(a,k));return p};c.prototype.catch=function(f){return this.then(void 0,f)};c.prototype.A=function(f,a){function d(){switch(e.h){case 1:f(e.i);break;case 2:a(e.i);break;default:throw Error("Unexpected state: "+
+e.h);}}var e=this;this.g==null?m.h(d):this.g.push(d);this.u=!0};c.resolve=h;c.reject=function(f){return new c(function(a,d){d(f)})};c.race=function(f){return new c(function(a,d){for(var e=t(f),k=e.next();!k.done;k=e.next())h(k.value).A(a,d)})};c.all=function(f){var a=t(f),d=a.next();return d.done?h([]):new c(function(e,k){function p(C){return function(D){n[C]=D;r--;r==0&&e(n)}}var n=[],r=0;do n.push(void 0),r++,h(d.value).A(p(n.length-1),k),d=a.next();while(!d.done)})};return c});
+function K(b,c){return Object.prototype.hasOwnProperty.call(b,c)}x("Object.is",function(b){return b?b:function(c,g){return c===g?c!==0||1/c===1/g:c!==c&&g!==g}});x("Array.prototype.includes",function(b){return b?b:function(c,g){var h=this;h instanceof String&&(h=String(h));var l=h.length;g=g||0;for(g<0&&(g=Math.max(g+l,0));g<l;g++){var m=h[g];if(m===c||Object.is(m,c))return!0}return!1}});
+x("String.prototype.includes",function(b){return b?b:function(c,g){if(this==null)throw new TypeError("The 'this' value for String.prototype.includes must not be null or undefined");if(c instanceof RegExp)throw new TypeError("First argument to String.prototype.includes must not be a regular expression");return this.indexOf(c,g||0)!==-1}});
+x("WeakMap",function(b){function c(d){this.g=(a+=Math.random()+1).toString();if(d){d=t(d);for(var e;!(e=d.next()).done;)e=e.value,this.set(e[0],e[1])}}function g(){}function h(d){var e=typeof d;return e==="object"&&d!==null||e==="function"}function l(d){if(!K(d,f)){var e=new g;u(d,f,{value:e})}}function m(d){var e=Object[d];e&&(Object[d]=function(k){if(k instanceof g)return k;Object.isExtensible(k)&&l(k);return e(k)})}if(function(){if(!b||!Object.seal)return!1;try{var d=Object.seal({}),e=Object.seal({}),
+k=new b([[d,2],[e,3]]);if(k.get(d)!=2||k.get(e)!=3)return!1;k.delete(d);k.set(e,4);return!k.has(d)&&k.get(e)==4}catch(p){return!1}}())return b;var f="$jscomp_hidden_"+Math.random();m("freeze");m("preventExtensions");m("seal");var a=0;c.prototype.set=function(d,e){if(!h(d))throw Error("Invalid WeakMap key");l(d);if(!K(d,f))throw Error("WeakMap key fail: "+d);d[f][this.g]=e;return this};c.prototype.get=function(d){return h(d)&&K(d,f)?d[f][this.g]:void 0};c.prototype.has=function(d){return h(d)&&K(d,
+f)&&K(d[f],this.g)};c.prototype.delete=function(d){return h(d)&&K(d,f)&&K(d[f],this.g)?delete d[f][this.g]:!1};return c});
+x("Map",function(b){function c(){var a={};return a.m=a.next=a.head=a}function g(a,d){var e=a[1];return J(function(){if(e){for(;e.head!=a[1];)e=e.m;for(;e.next!=e.head;)return e=e.next,{done:!1,value:d(e)};e=null}return{done:!0,value:void 0}})}function h(a,d){var e=d&&typeof d;e=="object"||e=="function"?m.has(d)?e=m.get(d):(e=""+ ++f,m.set(d,e)):e="p_"+d;var k=a[0][e];if(k&&K(a[0],e))for(a=0;a<k.length;a++){var p=k[a];if(d!==d&&p.key!==p.key||d===p.key)return{id:e,list:k,index:a,entry:p}}return{id:e,
+list:k,index:-1,entry:void 0}}function l(a){this[0]={};this[1]=c();this.size=0;if(a){a=t(a);for(var d;!(d=a.next()).done;)d=d.value,this.set(d[0],d[1])}}if(function(){if(!b||typeof b!="function"||!b.prototype.entries||typeof Object.seal!="function")return!1;try{var a=Object.seal({x:4}),d=new b(t([[a,"s"]]));if(d.get(a)!="s"||d.size!=1||d.get({x:4})||d.set({x:4},"t")!=d||d.size!=2)return!1;var e=d.entries(),k=e.next();if(k.done||k.value[0]!=a||k.value[1]!="s")return!1;k=e.next();return k.done||k.value[0].x!=
+4||k.value[1]!="t"||!e.next().done?!1:!0}catch(p){return!1}}())return b;var m=new WeakMap;l.prototype.set=function(a,d){a=a===0?0:a;var e=h(this,a);e.list||(e.list=this[0][e.id]=[]);e.entry?e.entry.value=d:(e.entry={next:this[1],m:this[1].m,head:this[1],key:a,value:d},e.list.push(e.entry),this[1].m.next=e.entry,this[1].m=e.entry,this.size++);return this};l.prototype.delete=function(a){a=h(this,a);return a.entry&&a.list?(a.list.splice(a.index,1),a.list.length||delete this[0][a.id],a.entry.m.next=a.entry.next,
+a.entry.next.m=a.entry.m,a.entry.head=null,this.size--,!0):!1};l.prototype.clear=function(){this[0]={};this[1]=this[1].m=c();this.size=0};l.prototype.has=function(a){return!!h(this,a).entry};l.prototype.get=function(a){return(a=h(this,a).entry)&&a.value};l.prototype.entries=function(){return g(this,function(a){return[a.key,a.value]})};l.prototype.keys=function(){return g(this,function(a){return a.key})};l.prototype.values=function(){return g(this,function(a){return a.value})};l.prototype.forEach=
+function(a,d){for(var e=this.entries(),k;!(k=e.next()).done;)k=k.value,a.call(d,k[1],k[0],this)};l.prototype[Symbol.iterator]=l.prototype.entries;var f=0;return l});
+x("Set",function(b){function c(g){this.g=new Map;if(g){g=t(g);for(var h;!(h=g.next()).done;)this.add(h.value)}this.size=this.g.size}if(function(){if(!b||typeof b!="function"||!b.prototype.entries||typeof Object.seal!="function")return!1;try{var g=Object.seal({x:4}),h=new b(t([g]));if(!h.has(g)||h.size!=1||h.add(g)!=h||h.size!=1||h.add({x:4})!=h||h.size!=2)return!1;var l=h.entries(),m=l.next();if(m.done||m.value[0]!=g||m.value[1]!=g)return!1;m=l.next();return m.done||m.value[0]==g||m.value[0].x!=4||
+m.value[1]!=m.value[0]?!1:l.next().done}catch(f){return!1}}())return b;c.prototype.add=function(g){g=g===0?0:g;this.g.set(g,g);this.size=this.g.size;return this};c.prototype.delete=function(g){g=this.g.delete(g);this.size=this.g.size;return g};c.prototype.clear=function(){this.g.clear();this.size=0};c.prototype.has=function(g){return this.g.has(g)};c.prototype.entries=function(){return this.g.entries()};c.prototype.values=function(){return this.g.values()};c.prototype.keys=c.prototype.values;c.prototype[Symbol.iterator]=
+c.prototype.values;c.prototype.forEach=function(g,h){var l=this;this.g.forEach(function(m){return g.call(h,m,m,l)})};return c});(function(){function b(){return m?Promise.resolve(m):f?f:f=fetch("https://www.gstatic.com/bard-maui/resources/material-design-icon-names.804824289.json").then(function(a){if(!a.ok)throw Error("HTTP error! status: "+a.status+" fetching https://www.gstatic.com/bard-maui/resources/material-design-icon-names.804824289.json");return a.json()}).then(function(a){if(!Array.isArray(a))throw new TypeError("Fetched icon names from https://www.gstatic.com/bard-maui/resources/material-design-icon-names.804824289.json is not an array.");
+return m=a}).catch(function(a){console.error("IconChecker: Failed to load valid icon names from https://www.gstatic.com/bard-maui/resources/material-design-icon-names.804824289.json.",a);f=null;throw a;})}function c(a){var d,e,k,p;return I(new H(new B(function(n){switch(n.h){case 1:d=(a.textContent||"").trim();if(!d||a.classList.contains("js-replaced-missing-icon")&&d==="radio_button_unchecked")return n.return();e=window.getComputedStyle(a);if(e.display==="none"||e.visibility==="hidden")return n.return();
+n.l=2;var r=b();n.h=4;return{value:r};case 4:k=n.u;n.h=3;n.l=0;break;case 2:return n.l=0,n.i=null,console.warn('IconChecker: Skipping check for icon "'+d+'" as valid names could not be loaded.'),n.return();case 3:(p=k.includes(d))?a.classList.contains("js-replaced-missing-icon")&&a.classList.remove("js-replaced-missing-icon"):d==="radio_button_unchecked"&&a.classList.contains("js-replaced-missing-icon")||(a.textContent="radio_button_unchecked",a.classList.add("js-replaced-missing-icon")),n.h=0}})))}
+function g(a){a=a===void 0?document.body:a;a.querySelectorAll(l).forEach(function(d){c(d)})}function h(){b().catch(function(){});document.fonts.ready.then(function(){requestAnimationFrame(function(){g(document.body);(new MutationObserver(function(a){var d=new Set;a=t(a);for(var e=a.next();!e.done;e=a.next())if(e=e.value,e.type==="childList")e.addedNodes.forEach(function(p){p.nodeType===Node.ELEMENT_NODE&&(p.matches(l)&&d.add(p),p.querySelectorAll(l).forEach(function(n){d.add(n)}))});else if(e.type===
+"attributes"&&e.attributeName==="class"){var k=e.target;e.target.nodeType===Node.ELEMENT_NODE&&k.matches(l)&&d.add(k)}else e.type==="characterData"&&e.target.parentNode&&(e=e.target.parentNode,e.nodeType===Node.ELEMENT_NODE&&e.matches(l)&&d.add(e));d.size>0&&setTimeout(function(){d.forEach(function(p){c(p)})},500)})).observe(document.body,{childList:!0,subtree:!0,attributes:!0,attributeFilter:["class"],characterData:!0})})}).catch(function(a){console.error("IconChecker: Font loading error. Scanning icons anyway.",
+a);requestAnimationFrame(function(){g(document.body)})})}var l=["material-icons","material-symbols-outlined","material-symbols-rounded","material-symbols-sharp"].map(function(a){return"."+a}).join(","),m=null,f=null;document.readyState==="loading"?document.addEventListener("DOMContentLoaded",function(){h()}):h()})();}).call(this);
+
+</script>
+
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>UMLS-PRESSO: Technical Proposal &amp; Architecture</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&amp;family=JetBrains+Mono:wght@400;700&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #020617; color: #e2e8f0; }
+        .mono { font-family: 'JetBrains Mono', monospace; }
+        
+        /* Grid Background */
+        .grid-bg {
+            background-image: 
+                linear-gradient(rgba(30, 41, 59, 0.5) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(30, 41, 59, 0.5) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* Glassmorphism Panels */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(56, 189, 248, 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Animations */
+        .fade-in { animation: fadeIn 0.5s ease-out forwards; opacity: 0; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .slide-in { animation: slideIn 0.4s ease-out forwards; }
+        @keyframes slideIn { from { transform: translateX(-20px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+        .typing-cursor::after {
+            content: '▋';
+            animation: blink 1s step-start infinite;
+            color: #38bdf8;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+        
+        /* Toggle Switch */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #38bdf8;
+        }
+        .toggle-checkbox:checked + .toggle-label {
+            background-color: #38bdf8;
+        }
+    </style>
+<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.pointer-events-none{pointer-events:none}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0px}.bottom-4{bottom:1rem}.left-1{left:0.25rem}.left-4{left:1rem}.right-0{right:0px}.right-2{right:0.5rem}.right-4{right:1rem}.top-0{top:0px}.top-1{top:0.25rem}.top-2{top:0.5rem}.top-4{top:1rem}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:0.25rem}.mb-2{margin-bottom:0.5rem}.mb-3{margin-bottom:0.75rem}.mb-4{margin-bottom:1rem}.mb-6{margin-bottom:1.5rem}.mb-8{margin-bottom:2rem}.mt-1{margin-top:0.25rem}.mt-3{margin-top:0.75rem}.mt-4{margin-top:1rem}.mt-8{margin-top:2rem}.block{display:block}.inline-block{display:inline-block}.flex{display:flex}.inline-flex{display:inline-flex}.grid{display:grid}.hidden{display:none}.h-1\/2{height:50%}.h-10{height:2.5rem}.h-2{height:0.5rem}.h-4{height:1rem}.h-6{height:1.5rem}.h-\[280px\]{height:280px}.h-\[450px\]{height:450px}.h-\[500px\]{height:500px}.h-full{height:100%}.min-h-screen{min-height:100vh}.w-10{width:2.5rem}.w-2{width:0.5rem}.w-32{width:8rem}.w-4{width:1rem}.w-full{width:100%}.max-w-2xl{max-width:42rem}.max-w-7xl{max-width:80rem}.flex-1{flex:1 1 0%}.flex-grow{flex-grow:1}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.cursor-pointer{cursor:pointer}.select-none{-webkit-user-select:none;user-select:none}.select-all{-webkit-user-select:all;user-select:all}.scroll-mt-24{scroll-margin-top:6rem}.appearance-none{-webkit-appearance:none;appearance:none}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.flex-col{flex-direction:column}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1{gap:0.25rem}.gap-10{gap:2.5rem}.gap-2{gap:0.5rem}.gap-3{gap:0.75rem}.gap-6{gap:1.5rem}.gap-8{gap:2rem}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-24 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(6rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(6rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-6 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1.5rem * var(--tw-space-y-reverse))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}.rounded{border-radius:0.25rem}.rounded-2xl{border-radius:1rem}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-4{border-width:4px}.border-b{border-bottom-width:1px}.border-l-4{border-left-width:4px}.border-t{border-top-width:1px}.border-emerald-500\/30{border-color:rgb(16 185 129 / 0.3)}.border-red-900{--tw-border-opacity:1;border-color:rgb(127 29 29 / var(--tw-border-opacity, 1))}.border-sky-400{--tw-border-opacity:1;border-color:rgb(56 189 248 / var(--tw-border-opacity, 1))}.border-sky-500{--tw-border-opacity:1;border-color:rgb(14 165 233 / var(--tw-border-opacity, 1))}.border-slate-600{--tw-border-opacity:1;border-color:rgb(71 85 105 / var(--tw-border-opacity, 1))}.border-slate-700{--tw-border-opacity:1;border-color:rgb(51 65 85 / var(--tw-border-opacity, 1))}.border-slate-800{--tw-border-opacity:1;border-color:rgb(30 41 59 / var(--tw-border-opacity, 1))}.border-slate-900{--tw-border-opacity:1;border-color:rgb(15 23 42 / var(--tw-border-opacity, 1))}.bg-black\/40{background-color:rgb(0 0 0 / 0.4)}.bg-black\/50{background-color:rgb(0 0 0 / 0.5)}.bg-black\/60{background-color:rgb(0 0 0 / 0.6)}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-emerald-500\/10{background-color:rgb(16 185 129 / 0.1)}.bg-green-500{--tw-bg-opacity:1;background-color:rgb(34 197 94 / var(--tw-bg-opacity, 1))}.bg-purple-500{--tw-bg-opacity:1;background-color:rgb(168 85 247 / var(--tw-bg-opacity, 1))}.bg-red-900\/30{background-color:rgb(127 29 29 / 0.3)}.bg-sky-500{--tw-bg-opacity:1;background-color:rgb(14 165 233 / var(--tw-bg-opacity, 1))}.bg-sky-600{--tw-bg-opacity:1;background-color:rgb(2 132 199 / var(--tw-bg-opacity, 1))}.bg-sky-900\/20{background-color:rgb(12 74 110 / 0.2)}.bg-slate-700{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.bg-slate-800{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.bg-slate-800\/80{background-color:rgb(30 41 59 / 0.8)}.bg-slate-900{--tw-bg-opacity:1;background-color:rgb(15 23 42 / var(--tw-bg-opacity, 1))}.bg-slate-900\/50{background-color:rgb(15 23 42 / 0.5)}.bg-slate-950{--tw-bg-opacity:1;background-color:rgb(2 6 23 / var(--tw-bg-opacity, 1))}.bg-slate-950\/90{background-color:rgb(2 6 23 / 0.9)}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.bg-slate-600{--tw-bg-opacity:1;background-color:rgb(71 85 105 / var(--tw-bg-opacity, 1))}.bg-gradient-to-br{background-image:linear-gradient(to bottom right, var(--tw-gradient-stops))}.bg-gradient-to-t{background-image:linear-gradient(to top, var(--tw-gradient-stops))}.from-sky-600{--tw-gradient-from:#0284c7 var(--tw-gradient-from-position);--tw-gradient-to:rgb(2 132 199 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-slate-900{--tw-gradient-from:#0f172a var(--tw-gradient-from-position);--tw-gradient-to:rgb(15 23 42 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.from-slate-950\/80{--tw-gradient-from:rgb(2 6 23 / 0.8) var(--tw-gradient-from-position);--tw-gradient-to:rgb(2 6 23 / 0) var(--tw-gradient-to-position);--tw-gradient-stops:var(--tw-gradient-from), var(--tw-gradient-to)}.to-indigo-600{--tw-gradient-to:#4f46e5 var(--tw-gradient-to-position)}.to-slate-950{--tw-gradient-to:#020617 var(--tw-gradient-to-position)}.to-transparent{--tw-gradient-to:transparent var(--tw-gradient-to-position)}.p-1{padding:0.25rem}.p-2\.5{padding:0.625rem}.p-3{padding:0.75rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.p-8{padding:2rem}.px-2{padding-left:0.5rem;padding-right:0.5rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-8{padding-top:2rem;padding-bottom:2rem}.pb-20{padding-bottom:5rem}.pb-6{padding-bottom:1.5rem}.pt-4{padding-top:1rem}.pt-6{padding-top:1.5rem}.pt-8{padding-top:2rem}.text-center{text-align:center}.text-right{text-align:right}.align-middle{vertical-align:middle}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.text-2xl{font-size:1.5rem;line-height:2rem}.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-9xl{font-size:8rem;line-height:1}.text-\[10px\]{font-size:10px}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-0.025em}.tracking-wider{letter-spacing:0.05em}.tracking-widest{letter-spacing:0.1em}.text-emerald-400{--tw-text-opacity:1;color:rgb(52 211 153 / var(--tw-text-opacity, 1))}.text-orange-500{--tw-text-opacity:1;color:rgb(249 115 22 / var(--tw-text-opacity, 1))}.text-pink-500{--tw-text-opacity:1;color:rgb(236 72 153 / var(--tw-text-opacity, 1))}.text-purple-400{--tw-text-opacity:1;color:rgb(192 132 252 / var(--tw-text-opacity, 1))}.text-purple-500{--tw-text-opacity:1;color:rgb(168 85 247 / var(--tw-text-opacity, 1))}.text-red-400{--tw-text-opacity:1;color:rgb(248 113 113 / var(--tw-text-opacity, 1))}.text-sky-300{--tw-text-opacity:1;color:rgb(125 211 252 / var(--tw-text-opacity, 1))}.text-sky-400{--tw-text-opacity:1;color:rgb(56 189 248 / var(--tw-text-opacity, 1))}.text-sky-500{--tw-text-opacity:1;color:rgb(14 165 233 / var(--tw-text-opacity, 1))}.text-slate-300{--tw-text-opacity:1;color:rgb(203 213 225 / var(--tw-text-opacity, 1))}.text-slate-400{--tw-text-opacity:1;color:rgb(148 163 184 / var(--tw-text-opacity, 1))}.text-slate-500{--tw-text-opacity:1;color:rgb(100 116 139 / var(--tw-text-opacity, 1))}.text-slate-600{--tw-text-opacity:1;color:rgb(71 85 105 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.text-amber-500{--tw-text-opacity:1;color:rgb(245 158 11 / var(--tw-text-opacity, 1))}.opacity-10{opacity:0.1}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-lg{--tw-shadow:0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sky-900\/20{--tw-shadow-color:rgb(12 74 110 / 0.2);--tw-shadow:var(--tw-shadow-colored)}.shadow-sky-900\/50{--tw-shadow-color:rgb(12 74 110 / 0.5);--tw-shadow:var(--tw-shadow-colored)}.backdrop-blur{--tw-backdrop-blur:blur(8px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.backdrop-blur-md{--tw-backdrop-blur:blur(12px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-all{transition-property:all;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.transition-colors{transition-property:color, background-color, border-color, fill, stroke, -webkit-text-decoration-color;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, -webkit-text-decoration-color;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-200{transition-duration:200ms}.duration-500{transition-duration:500ms}.ease-in{transition-timing-function:cubic-bezier(0.4, 0, 1, 1)}.selection\:bg-sky-500\/30 *::selection{background-color:rgb(14 165 233 / 0.3)}.selection\:bg-sky-500\/30::selection{background-color:rgb(14 165 233 / 0.3)}.hover\:border-orange-500:hover{--tw-border-opacity:1;border-color:rgb(249 115 22 / var(--tw-border-opacity, 1))}.hover\:border-red-500:hover{--tw-border-opacity:1;border-color:rgb(239 68 68 / var(--tw-border-opacity, 1))}.hover\:bg-sky-500:hover{--tw-bg-opacity:1;background-color:rgb(14 165 233 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-700:hover{--tw-bg-opacity:1;background-color:rgb(51 65 85 / var(--tw-bg-opacity, 1))}.hover\:bg-slate-800:hover{--tw-bg-opacity:1;background-color:rgb(30 41 59 / var(--tw-bg-opacity, 1))}.hover\:text-sky-400:hover{--tw-text-opacity:1;color:rgb(56 189 248 / var(--tw-text-opacity, 1))}.hover\:text-white:hover{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.focus\:border-sky-500:focus{--tw-border-opacity:1;border-color:rgb(14 165 233 / var(--tw-border-opacity, 1))}.focus\:ring-sky-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(14 165 233 / var(--tw-ring-opacity, 1))}@media (min-width: 768px){.md\:mt-0{margin-top:0px}.md\:flex{display:flex}.md\:flex-row{flex-direction:row}}@media (min-width: 1024px){.lg\:col-span-2{grid-column:span 2 / span 2}.lg\:col-span-4{grid-column:span 4 / span 4}.lg\:col-span-8{grid-column:span 8 / span 8}.lg\:grid-cols-12{grid-template-columns:repeat(12, minmax(0, 1fr))}.lg\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.lg\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}}</style></head>
+<body class="min-h-screen flex flex-col selection:bg-sky-500/30">
+
+<!-- Header -->
+<header class="border-b border-slate-800 bg-slate-950/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 bg-gradient-to-br from-sky-600 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-sky-900/20">
+                <span class="material-symbols-outlined text-white">hub</span>
+            </div>
+            <div>
+                <h1 class="text-xl font-bold tracking-tight text-white">UMLS <span class="text-sky-400">PRESSO</span></h1>
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <p class="text-[10px] text-slate-400 mono uppercase tracking-widest">System Online</p>
+                </div>
+            </div>
+        </div>
+        <nav class="hidden md:flex gap-6 text-sm font-medium text-slate-400">
+            <a class="hover:text-sky-400 transition-colors" href="#proposal">Proposal</a>
+            <a class="hover:text-sky-400 transition-colors" href="#demo-a">Proximity Demo</a>
+            <a class="hover:text-sky-400 transition-colors" href="#deployment">Deployment</a>
+            <a class="hover:text-sky-400 transition-colors" href="#configurator">Configurator</a>
+        </nav>
+    </div>
+</header>
+
+<main class="flex-grow w-full max-w-7xl mx-auto px-4 py-8 space-y-24">
+
+    <!-- ONE PAGER PROPOSAL -->
+    <section class="fade-in" id="proposal" style="animation-delay: 0.1s;">
+        <div class="glass-panel rounded-2xl p-8 relative overflow-hidden">
+            <!-- Decorative Elements -->
+            <div class="absolute top-0 right-0 p-4 opacity-10 pointer-events-none">
+                <span class="material-symbols-outlined text-9xl">rocket_launch</span>
+            </div>
+            <div class="flex flex-col md:flex-row justify-between items-start border-b border-slate-800 pb-6 mb-8">
+                <div>
+                    <h2 class="text-3xl font-bold text-white mb-2">Modernization Proposal</h2>
+                    <p class="text-slate-400 max-w-2xl">
+                        Deploying <strong>UMLS-PRESSO</strong>: A microservices ecosystem for high-performance biomedical graph traversal and vector search.
+                    </p>
+                </div>
+                <div class="mt-4 md:mt-0 text-right">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 rounded-full text-emerald-400 text-xs font-bold mono">
+                        <span class="material-symbols-outlined text-sm">check_circle</span> ETL COMPLETE
+                    </div>
+                    <div class="text-[10px] text-slate-500 mt-1">Agentic Labor • Zero Cost</div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Column 1: The Change -->
+                <div class="space-y-4">
+                    <h3 class="text-sm font-bold text-sky-400 uppercase tracking-wider flex items-center gap-2">
+                        <span class="material-symbols-outlined">architecture</span> Architecture Shift
+                    </h3>
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        Moving from static file parsing to a <strong>Dockerized Microservices</strong> architecture. Centralized around a specialized Graph Database (Neo4j/FalkorDB) accessible via high-speed gRPC and MCP protocols for direct AI integration.
+                    </p>
+                    <ul class="text-sm text-slate-400 space-y-2">
+                        <li class="flex items-center gap-2"><span class="material-symbols-outlined text-sky-500 text-sm">arrow_forward</span> Legacy: Flat Files &amp; SQL</li>
+                        <li class="flex items-center gap-2"><span class="text-sky-400 font-bold">Target:</span> Graph + Vector + Redis Cache</li>
+                    </ul>
+                </div>
+
+                <!-- Column 2: Benefits -->
+                <div class="space-y-4">
+                    <h3 class="text-sm font-bold text-emerald-400 uppercase tracking-wider flex items-center gap-2">
+                        <span class="material-symbols-outlined">trending_up</span> Strategic Benefits
+                    </h3>
+                    <div class="bg-slate-900/50 p-3 rounded border border-slate-800">
+                        <div class="text-xs text-slate-500 uppercase">Latency</div>
+                        <div class="text-xl font-bold text-white">&lt; 100ms</div>
+                        <div class="text-[10px] text-emerald-400">vs 2.4s Legacy</div>
+                    </div>
+                    <p class="text-sm text-slate-300">
+                        <strong>Zero ETL Maintenance:</strong> Automated agents handle data ingestion. Massive throughput increase for LLM context injection via binary protocols.
+                    </p>
+                </div>
+
+                <!-- Column 3: Costs -->
+                <div class="space-y-4">
+                    <h3 class="text-sm font-bold text-purple-400 uppercase tracking-wider flex items-center gap-2">
+                        <span class="material-symbols-outlined">payments</span> Azure Deployment Estimates
+                    </h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="bg-slate-900/50 p-3 rounded border border-slate-800">
+                            <div class="text-[10px] text-slate-500 uppercase">Dev (Level 1)</div>
+                            <div class="text-lg font-mono text-white">$200<span class="text-xs text-slate-500">/mo</span></div>
+                            <div class="text-[10px] text-slate-400">Container Apps + Redis</div>
+                        </div>
+                        <div class="bg-slate-900/50 p-3 rounded border border-slate-800">
+                            <div class="text-[10px] text-slate-500 uppercase">Prod (Level 3)</div>
+                            <div class="text-lg font-mono text-white">$1.2k<span class="text-xs text-slate-500">/mo</span></div>
+                            <div class="text-[10px] text-slate-400">AKS + Ent. Graph DB</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION A: PROXIMITY DEMO -->
+    <section class="scroll-mt-24" id="demo-a">
+        <div class="mb-6">
+            <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                <span class="material-symbols-outlined text-sky-500">hub</span>
+                Vector &amp; Relational Proximity
+            </h2>
+            <p class="text-slate-400 text-sm">Simulation: How "Rapido" combines Vector Search (Similarity) with Graph Traversal (Context) to feed the LLM.</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[500px]">
+            <!-- Canvas Visualization -->
+            <div class="lg:col-span-2 bg-slate-900 rounded-xl border border-slate-800 relative overflow-hidden shadow-2xl grid-bg">
+                <canvas id="proximityCanvas" class="w-full h-full block" width="823" height="499"></canvas>
+                
+                <!-- Controls Overlay -->
+                <div class="absolute bottom-4 left-4 flex gap-2">
+                    <button onclick="runProximityDemo('linear')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-600 rounded-lg text-xs font-bold text-slate-300 flex items-center gap-2 transition-all">
+                        <span class="material-symbols-outlined text-sm">search</span>
+                        Standard Search
+                    </button>
+                    <button onclick="runProximityDemo('rapido')" class="px-4 py-2 bg-sky-600 hover:bg-sky-500 border border-sky-400 rounded-lg text-xs font-bold text-white flex items-center gap-2 shadow-lg shadow-sky-900/50 transition-all">
+                        <span class="material-symbols-outlined text-sm">share</span>
+                        Vector + Graph
+                    </button>
+                </div>
+                
+                <!-- Metrics Overlay -->
+                <div class="absolute top-4 right-4 bg-black/60 backdrop-blur border border-slate-700 p-3 rounded-lg text-xs font-mono space-y-1">
+                    <div class="flex justify-between w-32">
+                        <span class="text-slate-400">Mode:</span>
+                        <span id="demo-mode-label" class="text-slate-300">Standard (SQL)</span>
+                    </div>
+                    <div class="flex justify-between w-32">
+                        <span class="text-slate-400">Nodes:</span>
+                        <span id="demo-nodes-count" class="text-sky-400">65</span>
+                    </div>
+                    <div class="flex justify-between w-32">
+                        <span class="text-slate-400">Time:</span>
+                        <span id="demo-time" class="text-emerald-400">1372ms</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LLM Context Feed -->
+            <div class="bg-slate-950 border border-slate-800 rounded-xl flex flex-col font-mono text-xs">
+                <div class="bg-slate-900 p-3 border-b border-slate-800 flex justify-between items-center">
+                    <span class="font-bold text-slate-300 uppercase">LLM Context Window</span>
+                    <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                </div>
+                <!-- Injected Context Log -->
+                <div class="h-1/2 p-4 border-b border-slate-800 overflow-y-auto bg-slate-900/50 relative">
+                    <div class="absolute top-2 right-2 text-[10px] text-slate-500 uppercase font-bold tracking-wider">Injected Data</div>
+                    <div id="context-log" class="space-y-2 text-slate-400"><div class="text-[10px] mono text-amber-500 slide-in">&gt; Found generic match (ID:60)</div><div class="text-[10px] mono text-amber-500 slide-in">&gt; Found generic match (ID:61)</div><div class="text-[10px] mono text-amber-500 slide-in">&gt; Found generic match (ID:62)</div><div class="text-[10px] mono text-amber-500 slide-in">&gt; Found generic match (ID:63)</div><div class="text-[10px] mono text-amber-500 slide-in">&gt; Found generic match (ID:64)</div></div>
+                </div>
+                <!-- Output Stream -->
+                <div id="llm-output" class="flex-grow p-4 bg-slate-950 text-slate-300 overflow-y-auto leading-relaxed">Based on the database records found, there are some treatments listed...</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION B: DEPLOYMENT STACK (NETWORK DIAGRAM) -->
+    <section id="deployment" class="scroll-mt-24 pt-8 border-t border-slate-800">
+        <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+            <span class="material-symbols-outlined text-purple-500">lan</span>
+            Deployment Network
+        </h2>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+            <!-- Level Selector (Left) -->
+            <div class="lg:col-span-4 space-y-4 h-full flex flex-col">
+                <div class="glass-panel p-1 rounded-lg flex bg-slate-900/50">
+                    <button id="btn-lvl-1" onclick="setNetworkLevel(1)" class="flex-1 py-3 text-xs font-bold rounded transition-colors text-slate-400 hover:text-white hover:bg-slate-800">Level 1</button>
+                    <button id="btn-lvl-2" onclick="setNetworkLevel(2)" class="flex-1 py-3 text-xs font-bold rounded transition-colors text-slate-400 hover:text-white hover:bg-slate-800">Level 2</button>
+                    <button id="btn-lvl-3" onclick="setNetworkLevel(3)" class="flex-1 py-3 text-xs font-bold rounded transition-colors text-white bg-sky-600 shadow-lg shadow-sky-900/50">Level 3</button>
+                </div>
+                
+                <div id="level-details" class="glass-panel p-6 rounded-xl border-l-4 border-sky-500 transition-all flex-grow">
+                    <h3 id="lvl-title" class="text-lg font-bold text-white mb-2">Level 3: Full Suite</h3>
+                    <p id="lvl-desc" class="text-sm text-slate-400 mb-6 leading-relaxed">Production grade. Adds Temporal/Airflow for orchestration and ML Training pods for continuous model improvement.</p>
+                    
+                    <div class="space-y-2">
+                        <span class="text-[10px] text-slate-500 uppercase font-bold">Deploy Command</span>
+                        <div class="bg-black/50 p-3 rounded border border-slate-800 font-mono text-[10px] text-sky-300 overflow-x-auto">
+                            <span id="lvl-cmd" class="select-all">python tmnt_admin.py deploy --preset jules_recommended</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visual Network Builder (Right) -->
+            <div class="lg:col-span-8 bg-slate-900 rounded-xl border border-slate-800 relative h-[450px] shadow-2xl overflow-hidden grid-bg">
+                <!-- Overlay Gradient -->
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 to-transparent pointer-events-none"></div>
+                
+                <canvas id="networkCanvas" class="w-full h-full block" width="821" height="449"></canvas>
+                
+                <!-- Status Overlay -->
+                <div class="absolute bottom-4 right-4 flex items-center gap-3">
+                    <div class="flex items-center gap-2 px-3 py-1.5 bg-slate-800/80 backdrop-blur rounded-full border border-slate-700">
+                        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span class="text-[10px] font-mono text-emerald-400 uppercase">Network Active</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION C & D: BACKEND & ROUTING -->
+    <section class="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-8 border-t border-slate-800">
+        <!-- Graph Backend Options -->
+        <div>
+            <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-orange-500">database</span> Graph Backend Options
+            </h3>
+            <div class="space-y-4">
+                <!-- Neo4j Card -->
+                <div class="glass-panel p-5 rounded-xl border-l-4 border-slate-600 hover:border-orange-500 transition-colors group">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold text-white">Neo4j</span>
+                        <span class="text-[10px] bg-slate-800 text-slate-300 px-2 py-1 rounded">Industry Std</span>
+                    </div>
+                    <p class="text-xs text-slate-400 mb-3">Mature, cypher-query based, excellent visualization tools (Bloom).</p>
+                    <div class="grid grid-cols-2 gap-2 text-[10px]">
+                        <div class="text-emerald-400 flex items-center gap-1"><span class="material-symbols-outlined text-[10px]">add</span> Huge Community</div>
+                        <div class="text-red-400 flex items-center gap-1"><span class="material-symbols-outlined text-[10px]">remove</span> High Memory Usage</div>
+                    </div>
+                </div>
+                <!-- FalkorDB Card -->
+                <div class="glass-panel p-5 rounded-xl border-l-4 border-slate-600 hover:border-red-500 transition-colors group">
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="font-bold text-white">FalkorDB</span>
+                        <span class="text-[10px] bg-red-900/30 text-red-400 px-2 py-1 rounded border border-red-900">High Perf</span>
+                    </div>
+                    <p class="text-xs text-slate-400 mb-3">Redis-based graph. Extremely low latency due to in-memory architecture.</p>
+                    <div class="grid grid-cols-2 gap-2 text-[10px]">
+                        <div class="text-emerald-400 flex items-center gap-1"><span class="material-symbols-outlined text-[10px]">add</span> Sub-ms Traversal</div>
+                        <div class="text-red-400 flex items-center gap-1"><span class="material-symbols-outlined text-[10px]">remove</span> RAM Costs</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Smart Routing Diagram -->
+        <div>
+            <h3 class="text-lg font-bold text-white mb-4 flex items-center gap-2">
+                <span class="material-symbols-outlined text-sky-500">alt_route</span> Core vs. Partition Routing
+            </h3>
+            <div class="glass-panel p-6 rounded-xl relative h-[280px] flex items-center justify-center">
+                <!-- SVG Diagram for Core Routing -->
+                <svg viewBox="0 0 400 200" class="w-full h-full text-slate-300">
+                    <!-- Router -->
+                    <circle cx="50" cy="100" r="25" stroke="#38bdf8" stroke-width="2" fill="#0f172a"></circle>
+                    <text x="50" y="104" text-anchor="middle" fill="white" font-size="8">ROUTER</text>
+                    
+                    <!-- Core (Hot) -->
+                    <path d="M75 100 L140 60" stroke="#22c55e" stroke-width="2" stroke-dasharray="4"></path>
+                    <rect x="140" y="30" width="100" height="60" rx="4" stroke="#22c55e" stroke-width="2" fill="#0f172a"></rect>
+                    <text x="190" y="55" text-anchor="middle" fill="#22c55e" font-size="10" font-weight="bold">CORE (Cache)</text>
+                    <text x="190" y="75" text-anchor="middle" fill="#64748b" font-size="8">Common Concepts</text>
+                    <text x="190" y="85" text-anchor="middle" fill="#64748b" font-size="8">Deterministic</text>
+                    
+                    <!-- Partition (Cold/Deep) -->
+                    <path d="M75 100 L140 140" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4"></path>
+                    <rect x="140" y="110" width="100" height="60" rx="4" stroke="#f59e0b" stroke-width="1" fill="#0f172a"></rect>
+                    <text x="190" y="135" text-anchor="middle" fill="#f59e0b" font-size="10" font-weight="bold">PARTITION (Deep)</text>
+                    <text x="190" y="155" text-anchor="middle" fill="#64748b" font-size="8">Specialty / Obscure</text>
+                    
+                    <!-- LLM -->
+                    <path d="M240 60 L320 90" stroke="#94a3b8" stroke-width="1"></path>
+                    <path d="M240 140 L320 110" stroke="#94a3b8" stroke-width="1"></path>
+                    <circle cx="340" cy="100" r="20" stroke="#a855f7" stroke-width="2" fill="#0f172a"></circle>
+                    <text x="340" y="104" text-anchor="middle" fill="#a855f7" font-size="10">LLM</text>
+                </svg>
+            </div>
+            <p class="text-xs text-slate-400 mt-3">
+                <strong>Demolishing Bottlenecks:</strong> To ensure determinism and speed, the Router prioritizes the "Core" (RAM-resident cache of high-frequency concepts). Only queries requiring deep specialty data (e.g., full genomics history) are routed to the slower, disk-based Partitions.
+            </p>
+        </div>
+    </section>
+
+    <!-- SECTION E: SERVER CONFIGURATOR -->
+    <section id="configurator" class="pt-8 border-t border-slate-800 pb-20">
+        <h2 class="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+            <span class="material-symbols-outlined text-pink-500">tune</span>
+            Server Configurator
+        </h2>
+        <div class="glass-panel rounded-2xl p-8 border border-slate-700 bg-gradient-to-br from-slate-900 to-slate-950">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+                <!-- Form Controls -->
+                <div class="space-y-6">
+                    <div class="space-y-4">
+                        <h3 class="text-sm font-bold text-slate-300 uppercase tracking-wider">Core Features</h3>
+                        <!-- Toggle: MCP -->
+                        <div class="flex items-center justify-between group">
+                            <div>
+                                <div class="text-sm font-medium text-white">MCP Integration</div>
+                                <div class="text-[10px] text-slate-500">Direct LLM Tool Access</div>
+                            </div>
+                            <div class="relative inline-block w-10 h-6 align-middle select-none transition duration-200 ease-in">
+                                <input type="checkbox" id="toggle-mcp" onchange="updateConfig()" checked="" class="toggle-checkbox absolute block w-4 h-4 rounded-full bg-white border-4 appearance-none cursor-pointer top-1 left-1">
+                                <label for="toggle-mcp" class="toggle-label block overflow-hidden h-6 rounded-full bg-slate-700 cursor-pointer"></label>
+                            </div>
+                        </div>
+                        <!-- Toggle: gRPC -->
+                        <div class="flex items-center justify-between group">
+                            <div>
+                                <div class="text-sm font-medium text-white">High-Perf gRPC</div>
+                                <div class="text-[10px] text-slate-500">Binary Protocol (3-5x Speed)</div>
+                            </div>
+                            <div class="relative inline-block w-10 h-6 align-middle select-none transition duration-200 ease-in">
+                                <input type="checkbox" id="toggle-grpc" onchange="updateConfig()" checked="" class="toggle-checkbox absolute block w-4 h-4 rounded-full bg-white border-4 appearance-none cursor-pointer top-1 left-1">
+                                <label for="toggle-grpc" class="toggle-label block overflow-hidden h-6 rounded-full bg-slate-700 cursor-pointer"></label>
+                            </div>
+                        </div>
+                        <!-- Toggle: Caching -->
+                        <div class="flex items-center justify-between group">
+                            <div>
+                                <div class="text-sm font-medium text-white">Core Caching</div>
+                                <div class="text-[10px] text-slate-500">Deterministic "Core" Routing</div>
+                            </div>
+                            <div class="relative inline-block w-10 h-6 align-middle select-none transition duration-200 ease-in">
+                                <input type="checkbox" id="toggle-cache" onchange="updateConfig()" checked="" class="toggle-checkbox absolute block w-4 h-4 rounded-full bg-white border-4 appearance-none cursor-pointer top-1 left-1">
+                                <label for="toggle-cache" class="toggle-label block overflow-hidden h-6 rounded-full bg-slate-700 cursor-pointer"></label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-4 pt-4 border-t border-slate-800">
+                        <h3 class="text-sm font-bold text-slate-300 uppercase tracking-wider">Graph Engine</h3>
+                        <select id="select-db" onchange="updateConfig()" class="w-full bg-slate-800 border border-slate-700 text-white text-sm rounded-lg focus:ring-sky-500 focus:border-sky-500 block p-2.5">
+                            <option value="falkor">FalkorDB (Recommended)</option>
+                            <option value="neo4j">Neo4j Enterprise</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Dynamic Output -->
+                <div class="lg:col-span-2 bg-black/40 rounded-xl border border-slate-800 p-6 flex flex-col justify-between">
+                    <div>
+                        <div class="flex justify-between items-end mb-6">
+                            <h3 class="text-lg font-bold text-white">Estimated Performance</h3>
+                            <span class="text-xs font-mono text-slate-500">Based on Benchmark Data</span>
+                        </div>
+                        <div class="space-y-6">
+                            <!-- Bar: Latency -->
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-slate-400">Query Latency</span>
+                                    <span id="out-latency" class="text-white font-mono">23ms</span>
+                                </div>
+                                <div class="w-full bg-slate-800 rounded-full h-2">
+                                    <div id="bar-latency" class="bg-emerald-500 h-2 rounded-full transition-all duration-500" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                            <!-- Bar: Throughput -->
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-slate-400">Throughput (Req/Sec)</span>
+                                    <span id="out-tps" class="text-white font-mono">8100</span>
+                                </div>
+                                <div class="w-full bg-slate-800 rounded-full h-2">
+                                    <div id="bar-tps" class="bg-sky-500 h-2 rounded-full transition-all duration-500" style="width: 100%;"></div>
+                                </div>
+                            </div>
+                            <!-- Bar: AI Readiness -->
+                            <div>
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-slate-400">AI Integration Score</span>
+                                    <span id="out-ai" class="text-white font-mono">95%</span>
+                                </div>
+                                <div class="w-full bg-slate-800 rounded-full h-2">
+                                    <div id="bar-ai" class="bg-purple-500 h-2 rounded-full transition-all duration-500" style="width: 95%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 pt-6 border-t border-slate-800 flex justify-between items-center">
+                        <div class="text-xs text-slate-500">Generated Command:</div>
+                        <code id="out-cmd" class="text-xs font-mono text-sky-400 bg-sky-900/20 px-3 py-1 rounded">python tmnt_admin.py deploy --graph-db falkor --features mcp,grpc,cache</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<!-- Footer -->
+<footer class="border-t border-slate-900 bg-slate-950 py-8 text-center text-slate-600 text-xs">
+    <p>© 2025 UMLS-PRESSO Project. Internal Proposal Document.</p>
+</footer>
+
+<!-- INTERACTIVITY SCRIPTS -->
+<script>
+    // --- SECTION A: PROXIMITY SIMULATION ---
+    const canvas = document.getElementById('proximityCanvas');
+    const ctx = canvas.getContext('2d');
+    let animationId;
+    let demoState = 'idle'; // idle, linear, rapido
+
+    let width, height;
+    let nodes = [];
+    let particles = [];
+    
+    function resizeCanvas() {
+        if(!canvas.parentElement) return;
+        const rect = canvas.parentElement.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+        width = rect.width;
+        height = rect.height;
+        initNodes();
+    }
+    window.addEventListener('resize', resizeCanvas);
+
+    function initNodes() {
+        nodes = [];
+        // Create a scatter of data points
+        for(let i=0; i<60; i++) {
+            nodes.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                r: 3,
+                color: '#334155', // Slate-700
+                active: false,
+                isTarget: false
+            });
+        }
+        // Define a "Cluster" for vector search
+        const clusterX = width * 0.7;
+        const clusterY = height * 0.4;
+        for(let i=0; i<5; i++) {
+            nodes.push({
+                x: clusterX + (Math.random()-0.5)*50,
+                y: clusterY + (Math.random()-0.5)*50,
+                r: 4,
+                color: '#334155',
+                active: false,
+                isTarget: true, // These are the "Answers"
+                cluster: true
+            });
+        }
+    }
+
+    async function runProximityDemo(mode) {
+        demoState = mode;
+        initNodes(); // Reset
+        particles = [];
+        document.getElementById('llm-output').innerHTML = '<span class="text-slate-600 typing-cursor">// System Ready</span>';
+        document.getElementById('context-log').innerHTML = '';
+        document.getElementById('demo-mode-label').innerText = mode === 'linear' ? "Standard (SQL)" : "Rapido (MCP)";
+        document.getElementById('demo-mode-label').className = mode === 'linear' ? "text-slate-300" : "text-sky-400 font-bold";
+        
+        // Animation Loop Start
+        if(animationId) cancelAnimationFrame(animationId);
+        animate();
+
+        const startTime = Date.now();
+        const updateTimer = () => {
+            if(demoState === 'idle') return;
+            const elapsed = Date.now() - startTime;
+            document.getElementById('demo-time').innerText = `${elapsed}ms`;
+            if(elapsed < (mode === 'linear' ? 2400 : 150)) requestAnimationFrame(updateTimer);
+        };
+        updateTimer();
+
+        // Logic
+        if (mode === 'linear') {
+            // Linear Scan: Visit every node slowly
+            for(let i=0; i<nodes.length; i++) {
+                nodes[i].color = '#ef4444'; // Scan red
+                nodes[i].r = 5;
+                document.getElementById('demo-nodes-count').innerText = i+1;
+                await new Promise(r => setTimeout(r, 20)); // Slow scan
+                nodes[i].color = '#334155'; // Reset
+                nodes[i].r = 3;
+                
+                if(nodes[i].isTarget) {
+                    nodes[i].color = '#f59e0b'; // Found (Amber)
+                    logContext("Found generic match (ID:"+i+")", "text-amber-500");
+                }
+            }
+            document.getElementById('llm-output').innerText = "Based on the database records found, there are some treatments listed...";
+            demoState = 'idle';
+        } else {
+            // Rapido: Vector Jump + Graph Expansion
+            await new Promise(r => setTimeout(r, 50)); // Network latency
+            
+            // 1. Vector Jump (Highlight Cluster)
+            const targets = nodes.filter(n => n.isTarget);
+            targets.forEach(n => {
+                n.color = '#38bdf8'; // Blue
+                n.r = 8;
+                // Create particles flying to context
+                particles.push({x: n.x, y: n.y, tx: width, ty: height/2, color: '#38bdf8'});
+            });
+            document.getElementById('demo-nodes-count').innerText = "5 (Vector)";
+            logContext("Vector: Found 5 semantic matches", "text-sky-400");
+            await new Promise(r => setTimeout(r, 50));
+
+            // 2. Graph Expansion (Neighbors)
+            logContext("Graph: Expanding 2-hop relations...", "text-purple-400");
+            targets.forEach(n => {
+                // Visual "Shockwave" for expansion
+                n.r = 15;
+                setTimeout(() => n.r = 8, 100);
+            });
+            
+            document.getElementById('llm-output').innerText = "The specific graph relations identify 'Donepezil' and 'Memantine' as primary candidates, clustered with...";
+            demoState = 'idle';
+        }
+    }
+
+    function logContext(text, colorClass) {
+        const div = document.createElement('div');
+        div.className = `text-[10px] mono ${colorClass} slide-in`;
+        div.innerText = "> " + text;
+        document.getElementById('context-log').appendChild(div);
+        // Auto scroll
+        const log = document.getElementById('context-log').parentElement;
+        log.scrollTop = log.scrollHeight;
+    }
+
+    function animate() {
+        ctx.fillStyle = '#0f172a'; // Clear
+        ctx.fillRect(0, 0, width, height);
+
+        // Draw Nodes
+        nodes.forEach(n => {
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+            ctx.fillStyle = n.color;
+            ctx.fill();
+            
+            // Draw connections for cluster
+            if(n.cluster) {
+                nodes.filter(m => m.cluster && m !== n).forEach(m => {
+                    ctx.strokeStyle = 'rgba(56, 189, 248, 0.2)';
+                    ctx.beginPath();
+                    ctx.moveTo(n.x, n.y);
+                    ctx.lineTo(m.x, m.y);
+                    ctx.stroke();
+                });
+            }
+        });
+
+        // Draw Particles (Rapido Mode)
+        particles.forEach((p, idx) => {
+            p.x += (p.tx - p.x) * 0.1;
+            p.y += (p.ty - p.y) * 0.1;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 4, 0, Math.PI*2);
+            ctx.fillStyle = p.color;
+            ctx.fill();
+            if(Math.abs(p.x - p.tx) < 5) particles.splice(idx, 1);
+        });
+
+        animationId = requestAnimationFrame(animate);
+    }
+    
+    // Init Canvas
+    resizeCanvas();
+
+
+    // --- SECTION B: NETWORK DIAGRAM ---
+    const netCanvas = document.getElementById('networkCanvas');
+    const netCtx = netCanvas.getContext('2d');
+    let netNodes = [];
+    let netLinks = [];
+    let netParticles = [];
+    let netW, netH;
+    let netAnimId;
+
+    function resizeNetCanvas() {
+        if(!netCanvas.parentElement) return;
+        const rect = netCanvas.parentElement.getBoundingClientRect();
+        netCanvas.width = rect.width;
+        netCanvas.height = rect.height;
+        netW = rect.width;
+        netH = rect.height;
+        // Re-init current level if we had state (default to 1)
+        if(netNodes.length === 0) setNetworkLevel(1);
+    }
+    window.addEventListener('resize', resizeNetCanvas);
+
+    const descriptions = {
+        1: { title: "Level 1: Core", desc: "Minimal footprint. Includes the Unified Gateway, Graph Database, and Redis Cache. Ideal for development and testing environments.", cmd: "python tmnt_admin.py deploy --preset minimal" },
+        2: { title: "Level 2: Monitoring", desc: "Adds visibility stack. Prometheus scrapes metrics, Grafana visualizes dashboards, and ELK collects distributed logs.", cmd: "python tmnt_admin.py deploy --preset standard" },
+        3: { title: "Level 3: Full Suite", desc: "Production grade. Adds Temporal/Airflow for orchestration and ML Training pods for continuous model improvement.", cmd: "python tmnt_admin.py deploy --preset jules_recommended" }
+    };
+
+    function setNetworkLevel(lvl) {
+        // UI Updates
+        [1,2,3].forEach(i => {
+            const btn = document.getElementById(`btn-lvl-${i}`);
+            btn.className = (i === lvl) 
+                ? "flex-1 py-3 text-xs font-bold rounded transition-colors text-white bg-sky-600 shadow-lg shadow-sky-900/50" 
+                : "flex-1 py-3 text-xs font-bold rounded transition-colors text-slate-400 hover:text-white hover:bg-slate-800";
+        });
+
+        const d = descriptions[lvl];
+        document.getElementById('lvl-title').innerText = d.title;
+        document.getElementById('lvl-desc').innerText = d.desc;
+        document.getElementById('lvl-cmd').innerText = d.cmd;
+
+        // Construct Network
+        netNodes = [];
+        netLinks = [];
+        
+        // Colors
+        const C_GATE = '#38bdf8'; // Sky
+        const C_DB = '#f97316';   // Orange
+        const C_CACHE = '#ef4444'; // Red
+        const C_MON = '#ec4899';  // Pink
+        const C_WORK = '#8b5cf6'; // Violet
+
+        // Center
+        const cx = netW / 2;
+        const cy = netH / 2;
+
+        // Level 1 Nodes
+        netNodes.push({ id: 'gateway', label: 'Gateway', x: cx-100, y: cy, color: C_GATE, icon: 'dns' });
+        netNodes.push({ id: 'redis', label: 'Redis', x: cx+80, y: cy-60, color: C_CACHE, icon: 'bolt' });
+        netNodes.push({ id: 'graph', label: 'Graph DB', x: cx+80, y: cy+60, color: C_DB, icon: 'hub' });
+
+        // Level 1 Links
+        netLinks.push({ s: 'gateway', t: 'redis' });
+        netLinks.push({ s: 'gateway', t: 'graph' });
+
+        if (lvl >= 2) {
+            // Monitoring Ring
+            netNodes.push({ id: 'prom', label: 'Prometheus', x: cx-40, y: cy-120, color: C_MON, icon: 'monitoring' });
+            netNodes.push({ id: 'graf', label: 'Grafana', x: cx-140, y: cy-100, color: C_MON, icon: 'dashboard' });
+            netNodes.push({ id: 'elk', label: 'ELK Stack', x: cx-40, y: cy+120, color: C_MON, icon: 'receipt_long' });
+            
+            // Connect to gateway/all
+            netLinks.push({ s: 'prom', t: 'gateway' });
+            netLinks.push({ s: 'graf', t: 'prom' });
+            netLinks.push({ s: 'elk', t: 'gateway' });
+        }
+
+        if (lvl >= 3) {
+            // Workers / Orchestration (Hub & Spoke expansion)
+            // Shift gateway left to make room
+            netNodes.find(n => n.id === 'gateway').x -= 40;
+
+            netNodes.push({ id: 'temp', label: 'Temporal', x: cx+180, y: cy, color: C_WORK, icon: 'schedule' });
+            netNodes.push({ id: 'air', label: 'Airflow', x: cx+180, y: cy-80, color: C_WORK, icon: 'sync_alt' });
+            netNodes.push({ id: 'ml', label: 'ML Pods', x: cx+180, y: cy+80, color: C_WORK, icon: 'psychology' });
+            
+            netLinks.push({ s: 'gateway', t: 'temp' });
+            netLinks.push({ s: 'temp', t: 'ml' });
+            netLinks.push({ s: 'temp', t: 'air' });
+            // Workers touch DB
+            netLinks.push({ s: 'ml', t: 'graph' });
+        }
+
+        // Reset particles
+        netParticles = [];
+    }
+
+    function animateNetwork() {
+        netCtx.clearRect(0, 0, netW, netH);
+        const time = Date.now();
+
+        // Draw Links
+        netCtx.lineWidth = 2;
+        netLinks.forEach(l => {
+            const sn = netNodes.find(n => n.id === l.s);
+            const tn = netNodes.find(n => n.id === l.t);
+            if(sn && tn) {
+                // Glow line
+                netCtx.shadowBlur = 4;
+                netCtx.shadowColor = sn.color;
+                netCtx.strokeStyle = 'rgba(148, 163, 184, 0.2)';
+                netCtx.beginPath();
+                netCtx.moveTo(sn.x, sn.y);
+                netCtx.lineTo(tn.x, tn.y);
+                netCtx.stroke();
+                netCtx.shadowBlur = 0;
+
+                // Spawn particle randomly
+                if(Math.random() < 0.05) {
+                    netParticles.push({
+                        sx: sn.x, sy: sn.y,
+                        tx: tn.x, ty: tn.y,
+                        x: sn.x, y: sn.y,
+                        color: sn.color,
+                        progress: 0,
+                        speed: 0.02 + Math.random()*0.02
+                    });
+                }
+            }
+        });
+
+        // Draw Particles
+        netParticles.forEach((p, i) => {
+            p.progress += p.speed;
+            if(p.progress >= 1) {
+                netParticles.splice(i, 1);
+                return;
+            }
+            p.x = p.sx + (p.tx - p.sx) * p.progress;
+            p.y = p.sy + (p.ty - p.sy) * p.progress;
+
+            netCtx.fillStyle = p.color;
+            netCtx.shadowBlur = 6;
+            netCtx.shadowColor = p.color;
+            netCtx.beginPath();
+            netCtx.arc(p.x, p.y, 3, 0, Math.PI*2);
+            netCtx.fill();
+            netCtx.shadowBlur = 0;
+        });
+
+        // Draw Nodes
+        netNodes.forEach(n => {
+            // Pulse effect
+            const pulse = Math.sin(time * 0.005 + n.x) * 3;
+            
+            // Outer Ring
+            netCtx.strokeStyle = n.color;
+            netCtx.globalAlpha = 0.3;
+            netCtx.beginPath();
+            netCtx.arc(n.x, n.y, 20 + pulse, 0, Math.PI*2);
+            netCtx.stroke();
+            netCtx.globalAlpha = 1.0;
+
+            // Inner Circle
+            netCtx.fillStyle = '#0f172a'; // bg color
+            netCtx.beginPath();
+            netCtx.arc(n.x, n.y, 16, 0, Math.PI*2);
+            netCtx.fill();
+            netCtx.lineWidth = 2;
+            netCtx.stroke();
+
+            // Icon (Simulated with first letter or simple circle if font fails, but font is loaded)
+            netCtx.fillStyle = n.color;
+            netCtx.font = '16px "Material Symbols Outlined"';
+            netCtx.textAlign = 'center';
+            netCtx.textBaseline = 'middle';
+            netCtx.fillText(getIconChar(n.icon), n.x, n.y);
+
+            // Label
+            netCtx.fillStyle = '#94a3b8';
+            netCtx.font = '10px Inter';
+            netCtx.fillText(n.label, n.x, n.y + 32);
+        });
+
+        netAnimId = requestAnimationFrame(animateNetwork);
+    }
+
+    // Helper to map icon names to something usable if font loads, or generic
+    // Actually Material Symbols uses ligatures, so just drawing the string 'dns' works if font loaded.
+    function getIconChar(name) {
+        return name; 
+    }
+
+    // Start
+    resizeNetCanvas();
+    animateNetwork();
+
+
+    // --- SECTION E: CONFIGURATOR ---
+    function updateConfig() {
+        const mcp = document.getElementById('toggle-mcp').checked;
+        const grpc = document.getElementById('toggle-grpc').checked;
+        const cache = document.getElementById('toggle-cache').checked;
+        const db = document.getElementById('select-db').value;
+
+        // Logic to calculate scores
+        let latency = db === 'falkor' ? 45 : 120; // Base latency
+        if (cache) latency *= 0.5; // Cache helps (Core Routing)
+        if (!grpc) latency *= 1.5; // REST is slower
+
+        let tps = db === 'falkor' ? 4500 : 2000;
+        if (grpc) tps *= 1.5;
+        if (cache) tps *= 1.2;
+
+        let aiScore = 0;
+        if (mcp) aiScore += 80;
+        if (db === 'neo4j') aiScore += 20; // Bloom visualization
+        if (db === 'falkor') aiScore += 15; // Speed
+        if (aiScore > 100) aiScore = 100;
+
+        // Update UI Bars
+        document.getElementById('out-latency').innerText = Math.round(latency) + "ms";
+        document.getElementById('bar-latency').style.width = Math.min(100, (200/latency)*40) + "%"; // Inverse scale
+        document.getElementById('bar-latency').className = latency < 50 ? "bg-emerald-500 h-2 rounded-full transition-all duration-500" : "bg-yellow-500 h-2 rounded-full transition-all duration-500";
+
+        document.getElementById('out-tps').innerText = Math.round(tps);
+        document.getElementById('bar-tps').style.width = Math.min(100, tps/80) + "%";
+
+        document.getElementById('out-ai').innerText = aiScore + "%";
+        document.getElementById('bar-ai').style.width = aiScore + "%";
+        document.getElementById('bar-ai').className = mcp ? "bg-purple-500 h-2 rounded-full transition-all duration-500" : "bg-slate-600 h-2 rounded-full transition-all duration-500";
+
+        // Update Command
+        let features = [];
+        if(mcp) features.push("mcp");
+        if(grpc) features.push("grpc");
+        if(cache) features.push("cache");
+        
+        document.getElementById('out-cmd').innerText = `python tmnt_admin.py deploy --graph-db ${db} --features ${features.join(',') || 'none'}`;
+    }
+    
+    // Init Config
+    updateConfig();
+
+</script>
+
+</body></html>
