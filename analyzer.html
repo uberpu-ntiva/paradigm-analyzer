@@ -161,7 +161,10 @@
              <div class="text-[10px] text-slate-400 font-bold uppercase mb-2 flex justify-between items-center tracking-wider">
                  <span>Raw JSON (Page)</span>
                  <div class="flex gap-1">
-                     <button onclick="downloadJSON()" class="text-xs bg-white border border-slate-200 text-slate-600 px-2 py-1 rounded hover:bg-slate-100 transition" title="Download Full JSON"><i data-lucide="download" class="w-3 h-3"></i></button>
+                     <button onclick="downloadOpenAPI()" class="text-xs bg-slate-100 hover:bg-violet-100 text-slate-600 hover:text-violet-600 px-2 py-1 rounded flex items-center gap-1 transition" title="Download OpenAPI Spec">
+                        <i data-lucide="braces" class="w-3 h-3"></i> OpenAPI
+                     </button>
+                     <button onclick="downloadJSON()" class="text-xs bg-white border border-slate-200 text-slate-600 px-2 py-1 rounded hover:bg-slate-100 transition" title="Download Full JSON"><i data-lucide="download" class="w-3 h-3"></i> JSON</button>
                  </div>
              </div>
              <div class="bg-white rounded border border-slate-200 flex-1 overflow-y-auto p-2 shadow-inner">
@@ -627,7 +630,7 @@
                 const metaEl = document.getElementById('tooltip-meta');
                 document.getElementById('tooltip-title').innerText = hit.key;
                 document.getElementById('tooltip-coords').innerText = `x:${Math.round(hit.rect.x)} y:${Math.round(hit.rect.y)}`;
-                metaEl.innerText = `${hit.source.toUpperCase()}  ${hit.prediction}`;
+                metaEl.innerText = `${hit.source.toUpperCase()} • ${hit.prediction}`;
                 metaEl.className = hit.source === 'Gap' ? "text-xs font-bold px-1.5 py-0.5 rounded w-fit mt-1 bg-amber-100 text-amber-700" : (hit.source === 'Vector' ? "text-xs font-bold px-1.5 py-0.5 rounded w-fit mt-1 bg-violet-100 text-violet-700" : "text-xs font-bold px-1.5 py-0.5 rounded w-fit mt-1 bg-blue-100 text-blue-700");
             } else {
                 if(!state.drag.active) els.canvas.style.cursor = 'grab'; 
