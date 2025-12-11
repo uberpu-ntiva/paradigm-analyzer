@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paradigm PDF Analyzer | Professional Edition</title>
+    <!-- PDF.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        :root {
+            --bg-app: #f8fafc;
+            --bg-panel: #ffffff;
+            --border-color: #e2e8f0;
+            --text-main: #0f172a;
+            --accent-primary: #2563eb;
+        }
+
+        body {
+            background-color: var(--bg-app);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            touch-action: none;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        canvas { 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); 
+            background: white;
+            transition: transform 0.1s ease-out;
+        }
+        
+        .fade-in { animation: fadeIn 0.2s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+        .thumb-active { 
+            border-color: var(--accent-primary) !important; 
+            box-shadow: 0 0 0 2px var(--accent-primary);
+            transform: scale(1.05);
+        }
+
+        details > summary { list-style: none; cursor: pointer; }
+        details > summary::-webkit-details-marker { display: none; }
+        
+        #form-content { scroll-behavior: smooth; }
+        
+        /* Table Styles for Intel */
+        .intel-row:nth-child(even) { background-color: #f8fafc; }
+        .intel-row:hover { background-color: #f1f5f9; }
+    </style>
+</head>
+<body class="h-screen w-screen flex overflow-hidden text-sm">
+
+    <!-- 1. TOOLBOX (Left Sidebar) -->
+    <div class="w-16 bg-white border-r border-slate-200 flex flex-col items-center py-4 z-50 shrink-0 shadow-sm gap-4">
+        <div class="mb-2 text-blue-600">
+            <i data-lucide="layers" class="w-8 h-8"></i>
+        </div>
+
+        <!-- Upload -->
+        <input type="file" id="file-input" accept=".pdf" class="hidden">
+        <button onclick="document.getElementById('file-input').click()" class="relative p-3 rounded-lg hover:bg-slate-100 transition text-slate-500 hover:text-blue-600 group" title="Upload PDF">
+            <i data-lucide="upload" class="w-6 h-6"></i>
+        </button>
+
+        <!-- Global Lock (New Location) -->
+        <button onclick="toggleGlobalSync()" id="btn-global-lock" class="relative p-3 rounded-lg bg-blue-50 text-blue-600 border border-blue-200 hover:bg-blue-100 transition group" title="Global Sync Lock">
+            <i data-lucide="lock" class="w-6 h-6" id="icon-global-lock"></i>
+            <div class="absolute left-14 top-2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 transition-opacity shadow-lg font-medium">Sync Active</div>
+        </button>
+
+        <div class="w-8 h-px bg-slate-200 my-2"></div>
+
+        <!-- Form Generator -->
+        <button onclick="toggleFormPanel(true)" id="btn-launch-form" class="relative p-3 rounded-lg hover:bg-slate-100 transition text-slate-400 hover:text-amber-600 opacity-50 cursor-not-allowed group" disabled>
+            <i data-lucide="file-text" class="w-6 h-6"></i>
+            <div class="absolute left-14 top-2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 transition-opacity shadow-lg font-medium">Form Generator</div>
+        </button>
+
+        <!-- Layout Analysis -->
+        <button onclick="toggleSidebar()" class="relative p-3 rounded-lg hover:bg-slate-100 transition text-slate-500 hover:text-violet-600 group">
+            <i data-lucide="file-code-2" class="w-6 h-6"></i>
+            <div class="absolute left-14 top-2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 transition-opacity shadow-lg font-medium">Data Stream</div>
+        </button>
+
+        <!-- Overview -->
+        <button onclick="toggleFilmstrip()" id="btn-launch-strip" class="relative p-3 rounded-lg hover:bg-slate-100 transition text-slate-400 hover:text-blue-600 opacity-50 cursor-not-allowed group" disabled>
+            <i data-lucide="gallery-horizontal" class="w-6 h-6"></i>
+            <div class="absolute left-14 top-2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 transition-opacity shadow-lg font-medium">Overview</div>
+        </button>
+
+        <!-- Spacer -->
+        <div class="flex-1"></div>
+
+        <!-- Save/Submit Button -->
+        <button onclick="toggleSaveModal(true)" id="btn-save" class="relative p-3 rounded-lg hover:bg-slate-100 transition text-slate-400 hover:text-emerald-600 opacity-50 cursor-not-allowed group" disabled>
+            <i data-lucide="save" class="w-6 h-6"></i>
+            <div class="absolute left-14 top-2 bg-slate-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 pointer-events-none whitespace-nowrap z-50 transition-opacity shadow-lg font-medium">Save & Submit</div>
+        </button>
+        
+        <div class="mb-2">
+             <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-sm" id="status-light"></div>
+        </div>
+    </div>
+
+    <!-- 2. ANALYSIS SIDEBAR -->
+    <div id="data-sidebar" class="w-0 overflow-hidden bg-white border-r border-slate-200 transition-[width] duration-300 flex flex-col z-40 relative shadow-xl">
+        <div class="p-4 border-b border-slate-200 flex justify-between items-center whitespace-nowrap bg-slate-50">
+            <span class="text-xs font-bold text-slate-700 uppercase flex items-center gap-2">
+                <i data-lucide="activity" class="w-3 h-3 text-violet-600"></i> Page Intel
+            </span>
+            <button onclick="toggleSidebar()" class="text-slate-400 hover:text-slate-700 transition"><i data-lucide="x" class="w-4 h-4"></i></button>
+        </div>
+        
+        <!-- Metrics (Condensed) -->
+        <div class="px-4 pt-4 grid grid-cols-2 gap-2">
+            <div class="bg-violet-50 p-2 rounded border border-violet-100 text-center">
+                <div class="text-[9px] text-violet-600 font-bold uppercase">Vectors</div>
+                <div id="stat-vectors" class="text-sm text-slate-800 font-bold">0</div>
+            </div>
+            <div class="bg-amber-50 p-2 rounded border border-amber-100 text-center">
+                <div class="text-[9px] text-amber-600 font-bold uppercase">Fields</div>
+                <div id="stat-fields" class="text-sm text-slate-800 font-bold">0</div>
+            </div>
+        </div>
+
+        <!-- PAGE INTEL TABLE (The Guesses) -->
+        <div class="flex-1 p-4 overflow-hidden flex flex-col min-h-0">
+            <div class="text-[10px] text-slate-400 font-bold uppercase mb-2">Detected Fields (Current Page)</div>
+            
+            <div class="border border-slate-200 rounded-lg overflow-hidden flex-1 bg-white flex flex-col">
+                <!-- Header -->
+                <div class="bg-slate-50 border-b border-slate-200 px-3 py-2 grid grid-cols-3 gap-2 text-[10px] font-bold text-slate-600 uppercase">
+                    <div class="col-span-1">Label</div>
+                    <div class="col-span-2">Inferred Type</div>
+                </div>
+                <!-- Content -->
+                <div id="field-intel-list" class="overflow-y-auto flex-1 p-0">
+                    <div class="p-4 text-center text-xs text-slate-400 italic">No fields detected on this page.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- JSON Output (Bottom) -->
+        <div class="h-1/3 p-4 border-t border-slate-200 bg-slate-50 flex flex-col">
+             <div class="text-[10px] text-slate-400 font-bold uppercase mb-2 flex justify-between items-center tracking-wider">
+                 <span>Raw JSON (Page)</span>
+                 <div class="flex gap-1">
+                     <button onclick="downloadJSON()" class="text-xs bg-white border border-slate-200 text-slate-600 px-2 py-1 rounded hover:bg-slate-100 transition" title="Download Full JSON"><i data-lucide="download" class="w-3 h-3"></i></button>
+                 </div>
+             </div>
+             <div class="bg-white rounded border border-slate-200 flex-1 overflow-y-auto p-2 shadow-inner">
+                 <pre id="json-output" class="text-[9px] text-slate-600 font-mono whitespace-pre-wrap break-all leading-tight">// Waiting for scan...</pre>
+             </div>
+        </div>
+    </div>
+
+    <!-- 3. MAIN STAGE -->
+    <div class="flex-1 relative flex flex-col h-full overflow-hidden bg-slate-100">
+        <!-- Toolbar -->
+        <div class="absolute top-6 left-1/2 -translate-x-1/2 z-30 flex items-center gap-2 bg-white border border-slate-200 rounded-full px-5 py-2 shadow-xl transition-opacity duration-300 opacity-0" id="toolbar">
+            <button id="prev-btn" class="p-1.5 rounded-full hover:bg-slate-100 text-slate-500 transition"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+            <span id="page-indicator" class="text-xs font-semibold text-slate-700 w-16 text-center">Page 1</span>
+            <button id="next-btn" class="p-1.5 rounded-full hover:bg-slate-100 text-slate-500 transition"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+            <div class="w-px h-4 bg-slate-200 mx-2"></div>
+            <button onclick="toggleFit()" id="btn-fit" class="p-1.5 rounded-full hover:bg-slate-100 text-blue-600 transition font-bold text-xs" title="Toggle Auto-Fit">FIT</button>
+            <div class="w-px h-4 bg-slate-200 mx-2"></div>
+            <button id="zoom-out" class="p-1.5 rounded-full hover:bg-slate-100 text-slate-500 transition"><i data-lucide="minus" class="w-4 h-4"></i></button>
+            <span id="zoom-level" class="text-[10px] font-medium text-slate-500 w-10 text-center">100%</span>
+            <button id="zoom-in" class="p-1.5 rounded-full hover:bg-slate-100 text-slate-500 transition"><i data-lucide="plus" class="w-4 h-4"></i></button>
+        </div>
+
+        <!-- Canvas -->
+        <div class="flex-1 overflow-hidden flex items-center justify-center relative touch-none" id="canvas-container">
+            <div id="empty-state" class="text-center">
+                <div class="w-20 h-20 bg-white border-2 border-dashed border-slate-300 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i data-lucide="upload-cloud" class="w-8 h-8 text-slate-400"></i>
+                </div>
+                <div class="text-sm font-medium text-slate-500">Upload a PDF to begin analysis</div>
+                <button onclick="document.getElementById('file-input').click()" class="mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md shadow transition">Select File</button>
+            </div>
+            <canvas id="the-canvas" class="hidden rounded-lg shadow-2xl cursor-grab active:cursor-grabbing"></canvas>
+        </div>
+
+        <!-- Intel Bar -->
+        <div id="page-intel-bar" class="h-8 bg-white border-t border-slate-200 flex items-center px-4 justify-between shrink-0 z-20 hidden">
+            <div class="flex items-center gap-4 text-xs text-slate-600">
+                <div class="flex items-center gap-1.5">
+                    <i data-lucide="maximize" class="w-3 h-3 text-slate-400"></i>
+                    <span id="intel-dims" class="font-mono">0 x 0 pt</span>
+                </div>
+                <div class="w-px h-3 bg-slate-300"></div>
+                <div class="flex items-center gap-1.5">
+                    <span class="text-slate-400 uppercase text-[10px] font-bold">Range</span>
+                    <span id="intel-range" class="font-mono text-[10px]">--</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-2">
+                <span id="intel-fit-mode" class="text-[9px] font-bold uppercase bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded">Auto Fit</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. FILMSTRIP -->
+    <div id="filmstrip-panel" class="fixed bottom-0 left-16 right-0 h-40 bg-white/95 backdrop-blur border-t border-slate-200 z-40 transform translate-y-full transition-transform duration-300 flex flex-col shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+        <div class="h-10 bg-slate-50 border-b border-slate-200 flex justify-between items-center px-4">
+            <div class="flex items-center gap-4">
+                <span class="text-xs font-bold text-slate-600 uppercase tracking-wide flex items-center gap-2">
+                    <i data-lucide="grid" class="w-3 h-3 text-blue-500"></i> Document Overview
+                </span>
+            </div>
+            <button onclick="toggleFilmstrip()" class="text-slate-400 hover:text-slate-700 transition"><i data-lucide="x" class="w-4 h-4"></i></button>
+        </div>
+        <div id="filmstrip-track" class="flex-1 overflow-x-auto p-4 flex gap-4 items-center bg-white scroll-smooth"></div>
+    </div>
+
+    <!-- 5. FORM FLY-OUT -->
+    <div id="form-flyout" class="fixed inset-y-0 right-0 w-96 bg-white border-l border-slate-200 shadow-2xl transform translate-x-full transition-transform duration-300 z-50 flex flex-col">
+        <div class="p-5 border-b border-slate-200 flex justify-between items-center bg-slate-50">
+            <h2 class="text-slate-800 font-bold text-sm">Form Preview</h2>
+            <button onclick="toggleFormPanel(false)" class="text-slate-400 hover:text-slate-700 transition"><i data-lucide="x" class="w-4 h-4"></i></button>
+        </div>
+        <div id="form-content" class="flex-1 overflow-y-auto p-6 space-y-6 bg-white"></div>
+    </div>
+
+    <!-- 6. SAVE MODAL -->
+    <div id="save-modal" class="fixed inset-0 z-[100] bg-slate-900/50 backdrop-blur-sm hidden flex items-center justify-center fade-in">
+        <div class="bg-white rounded-xl shadow-2xl w-[600px] border border-slate-200 overflow-hidden flex flex-col max-h-[80vh]">
+            <div class="p-5 border-b border-slate-100 flex justify-between items-center">
+                <h3 class="font-bold text-slate-800 flex items-center gap-2">
+                    <i data-lucide="send" class="w-4 h-4 text-emerald-600"></i> Submit Analysis
+                </h3>
+                <button onclick="toggleSaveModal(false)" class="text-slate-400 hover:text-slate-700"><i data-lucide="x" class="w-4 h-4"></i></button>
+            </div>
+            <div class="p-6 space-y-4 overflow-y-auto flex-1">
+                <div class="text-sm text-slate-600">Review the payload below before submitting.</div>
+                <details class="group border border-slate-200 rounded-lg overflow-hidden">
+                    <summary class="bg-slate-50 p-3 font-medium text-xs text-slate-700 uppercase tracking-wide flex justify-between items-center select-none hover:bg-slate-100 transition">
+                        <span>Payload Preview (Full JSON)</span>
+                        <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+                    </summary>
+                    <div class="bg-slate-900 p-4 overflow-x-auto max-h-[300px]">
+                        <pre id="payload-preview" class="text-[10px] text-green-400 font-mono whitespace-pre-wrap break-all">// Loading...</pre>
+                    </div>
+                </details>
+                <div class="p-3 bg-blue-50 rounded-lg border border-blue-100">
+                    <div class="text-[10px] font-bold text-blue-600 uppercase mb-1">Status</div>
+                    <div class="text-xs text-blue-800">Ready to POST to endpoint.</div>
+                </div>
+            </div>
+            <div class="p-5 border-t border-slate-100 bg-slate-50 flex gap-3 shrink-0">
+                <button onclick="toggleSaveModal(false)" class="flex-1 px-4 py-2 bg-white border border-slate-300 text-slate-600 rounded-lg text-sm font-medium hover:bg-slate-50 transition">Cancel</button>
+                <button onclick="submitData()" class="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-lg text-sm font-medium hover:bg-emerald-700 shadow-md transition flex items-center justify-center gap-2">Submit Data</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOOLTIPS -->
+    <div id="tooltip" class="fixed hidden z-[60] pointer-events-none bg-slate-800 text-white p-3 rounded-lg shadow-xl text-xs max-w-xs transform -translate-x-1/2 -translate-y-full mt-[-10px]">
+        <div id="tooltip-title" class="font-bold mb-1"></div>
+        <div id="tooltip-coords" class="text-slate-400 font-mono mb-1"></div>
+        <div id="tooltip-meta" class="text-xs font-medium px-1.5 py-0.5 rounded w-fit mt-1"></div>
+        <div class="absolute bottom-[-4px] left-1/2 -translate-x-1/2 w-2 h-2 bg-slate-800 rotate-45"></div>
+    </div>
+
+    <div id="thumb-popup" class="fixed hidden z-[60] pointer-events-none bg-white border border-slate-200 p-3 rounded-lg shadow-xl fade-in min-w-[120px]">
+        <div class="text-slate-500 font-bold text-[10px] uppercase mb-1 border-b border-slate-100 pb-1">Page Info</div>
+        <div id="thumb-info" class="text-sm text-slate-800 font-medium"></div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+
+        // --- STATE ---
+        const state = {
+            pdf: null,
+            fileBase64: null,
+            pageNum: 1,
+            scale: 1.0,
+            autoFit: true,
+            globalSync: true, // MASTER SYNC
+            minW: Infinity, maxW: -Infinity, minH: Infinity, maxH: -Infinity,
+            schema: [], vectors: [], text: [], layout: {}, 
+            isRendering: false,
+            sidebarOpen: false,
+            drag: { active: false, startX: 0, currentX: 0 }
+        };
+
+        const els = {
+            canvas: document.getElementById('the-canvas'),
+            ctx: document.getElementById('the-canvas').getContext('2d'),
+            input: document.getElementById('file-input'),
+            jsonOut: document.getElementById('json-output'),
+            fieldList: document.getElementById('field-intel-list'),
+            container: document.getElementById('canvas-container'),
+            empty: document.getElementById('empty-state'),
+            tooltip: document.getElementById('tooltip'),
+            toolbar: document.getElementById('toolbar'),
+            statVectors: document.getElementById('stat-vectors'),
+            statFields: document.getElementById('stat-fields'),
+            zoomLevel: document.getElementById('zoom-level'),
+            flyout: document.getElementById('form-flyout'),
+            formContent: document.getElementById('form-content'),
+            btnForm: document.getElementById('btn-launch-form'),
+            btnStrip: document.getElementById('btn-launch-strip'),
+            btnSave: document.getElementById('btn-save'),
+            filmstrip: document.getElementById('filmstrip-panel'),
+            filmstripTrack: document.getElementById('filmstrip-track'),
+            sidebar: document.getElementById('data-sidebar'),
+            thumbPopup: document.getElementById('thumb-popup'),
+            thumbInfo: document.getElementById('thumb-info'),
+            saveModal: document.getElementById('save-modal'),
+            payloadPreview: document.getElementById('payload-preview'),
+            intelBar: document.getElementById('page-intel-bar'),
+            intelDims: document.getElementById('intel-dims'),
+            intelRange: document.getElementById('intel-range'),
+            intelFit: document.getElementById('intel-fit-mode'),
+            btnFit: document.getElementById('btn-fit'),
+            btnGlobalLock: document.getElementById('btn-global-lock'),
+            iconGlobalLock: document.getElementById('icon-global-lock')
+        };
+
+        // --- LISTENERS ---
+        els.input.addEventListener('change', handleUpload);
+        els.canvas.addEventListener('mousemove', handleMouseMove);
+        els.canvas.addEventListener('mouseleave', () => els.tooltip.classList.add('hidden'));
+        
+        els.container.addEventListener('touchstart', handleTouchStart, {passive: false});
+        els.container.addEventListener('touchend', handleTouchEnd);
+        els.container.addEventListener('mousedown', handleMouseDown);
+        els.container.addEventListener('mouseup', handleMouseUp);
+        window.addEventListener('resize', () => { if(state.autoFit && state.pdf) renderFrame(); });
+
+        document.getElementById('prev-btn').addEventListener('click', () => changePage(-1));
+        document.getElementById('next-btn').addEventListener('click', () => changePage(1));
+        document.getElementById('zoom-in').addEventListener('click', () => { state.autoFit = false; changeZoom(0.2); });
+        document.getElementById('zoom-out').addEventListener('click', () => { state.autoFit = false; changeZoom(-0.2); });
+
+        function toggleSidebar() { state.sidebarOpen = !state.sidebarOpen; els.sidebar.style.width = state.sidebarOpen ? '320px' : '0'; }
+        function toggleFormPanel(show) { show ? (renderGeneratedForm(), els.flyout.classList.remove('translate-x-full')) : els.flyout.classList.add('translate-x-full'); }
+        function toggleFilmstrip() { els.filmstrip.classList.toggle('translate-y-full'); }
+        function toggleSaveModal(show) { 
+            if(show) {
+                els.saveModal.classList.remove('hidden');
+                const p = getPayload();
+                const displayP = JSON.parse(JSON.stringify(p));
+                if(displayP.file_base64) displayP.file_base64 = "[BASE64_STRING_TRUNCATED]";
+                els.payloadPreview.innerText = JSON.stringify(displayP, null, 2);
+            } else els.saveModal.classList.add('hidden'); 
+        }
+
+        // --- GLOBAL SYNC LOGIC ---
+        function toggleFit() { state.autoFit = !state.autoFit; renderFrame(); }
+
+        function toggleGlobalSync() {
+            state.globalSync = !state.globalSync;
+            const btn = els.btnGlobalLock;
+            if(state.globalSync) {
+                btn.className = "relative p-3 rounded-lg bg-blue-50 text-blue-600 border border-blue-200 hover:bg-blue-100 transition group";
+                btn.querySelector('div').innerText = "Sync Active";
+                els.iconGlobalLock.setAttribute('stroke', 'currentColor'); // Default lucide handling, but just ensure color class works
+                // Trigger sync immediately
+                syncAllViews();
+            } else {
+                btn.className = "relative p-3 rounded-lg hover:bg-slate-100 transition text-slate-400 group";
+                btn.querySelector('div').innerText = "Sync Disabled";
+            }
+        }
+
+        function syncAllViews() {
+            if(!state.globalSync) return;
+            
+            // 1. Sync Filmstrip
+            const thumb = document.getElementById(`thumb-${state.pageNum}`);
+            if(thumb) {
+                thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                document.querySelectorAll('#filmstrip-track > div').forEach(d => d.classList.remove('thumb-active'));
+                thumb.classList.add('thumb-active');
+            }
+
+            // 2. Sync Form
+            const header = document.getElementById(`form-header-${state.pageNum}`);
+            if(header) header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // 3. Sync Data Sidebar (JSON & Intel)
+            updateSidebarContent();
+        }
+
+        // --- SWIPE LOGIC ---
+        let touchStart = 0, touchEnd = 0;
+        function handleTouchStart(e) { touchStart = e.changedTouches[0].screenX; }
+        function handleTouchEnd(e) { touchEnd = e.changedTouches[0].screenX; handleSwipe(); }
+        function handleMouseDown(e) { state.drag.active=true; state.drag.startX = e.clientX; els.canvas.style.cursor = 'grabbing'; }
+        function handleMouseUp(e) { 
+            if(!state.drag.active) return;
+            state.drag.active=false; els.canvas.style.cursor = 'grab';
+            touchStart = state.drag.startX; touchEnd = e.clientX; handleSwipe(); 
+        }
+        function handleSwipe() {
+            const threshold = 100;
+            if (touchEnd < touchStart - threshold) changePage(1); 
+            if (touchEnd > touchStart + threshold) changePage(-1); 
+        }
+
+        // --- MAIN LOGIC ---
+        async function handleUpload(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = async (ev) => { state.fileBase64 = ev.target.result; };
+            reader.readAsDataURL(file);
+            const buffer = await file.arrayBuffer();
+            
+            els.empty.classList.add('hidden');
+            els.canvas.classList.remove('hidden');
+            els.toolbar.classList.remove('opacity-0');
+            els.intelBar.classList.remove('hidden');
+            els.jsonOut.innerText = "// Scanning...";
+            
+            els.btnForm.classList.remove('opacity-50', 'cursor-not-allowed'); els.btnForm.disabled = false;
+            els.btnStrip.classList.remove('opacity-50', 'cursor-not-allowed'); els.btnStrip.disabled = false;
+            els.btnSave.classList.remove('opacity-50', 'cursor-not-allowed'); els.btnSave.disabled = false;
+
+            state.sidebarOpen = true; els.sidebar.style.width = '320px';
+
+            try {
+                state.pdf = await pdfjsLib.getDocument({ data: buffer }).promise;
+                
+                const analysis = await runLayoutAnalysis(state.pdf);
+                state.schema = analysis.fields; state.vectors = analysis.vectors; state.text = analysis.text; state.layout = analysis.metrics;
+
+                els.statVectors.innerText = state.vectors.length; els.statFields.innerText = state.schema.length;
+                els.intelRange.innerText = `W:[${Math.round(state.minW)}-${Math.round(state.maxW)}] H:[${Math.round(state.minH)}-${Math.round(state.maxH)}]`;
+
+                updateSidebarContent();
+                state.pageNum = 1;
+                renderFrame();
+                generateFilmstrip();
+
+            } catch (err) {
+                console.error(err);
+                els.jsonOut.innerText = `Error: ${err.message}`;
+            }
+        }
+
+        // --- ANALYZER ---
+        function inferSemanticType(label) {
+            const l = label.toLowerCase();
+            if (/(name|first|last|full)/.test(l)) return "NAME";
+            if (/(address|street|residence|apt)/.test(l)) return "ADDRESS";
+            if (/(city|town)/.test(l)) return "CITY";
+            if (/(state|province|region)/.test(l)) return "STATE";
+            if (/(zip|postal|code)/.test(l)) return "ZIP_CODE";
+            if (/(email|e-mail)/.test(l)) return "EMAIL";
+            if (/(phone|mobile|cell|fax)/.test(l)) return "PHONE";
+            if (/(date|dob|birth|day|year|month)/.test(l)) return "DATE";
+            if (/(sign|signature)/.test(l)) return "SIGNATURE";
+            if (/(social|ssn|security)/.test(l)) return "SSN";
+            return "TEXT"; 
+        }
+
+        async function runLayoutAnalysis(pdf) {
+            let fields = [], vectors = [], textNodes = []; 
+            let totalLineHeight = 0, totalLines = 0;
+            let margins = { top: Infinity, bottom: -Infinity, left: Infinity, right: -Infinity };
+            state.minW = Infinity; state.maxW = -Infinity; state.minH = Infinity; state.maxH = -Infinity;
+
+            for (let i = 1; i <= pdf.numPages; i++) {
+                const page = await pdf.getPage(i);
+                const viewport = page.getViewport({ scale: 1.0 });
+                state.minW = Math.min(state.minW, viewport.width); state.maxW = Math.max(state.maxW, viewport.width);
+                state.minH = Math.min(state.minH, viewport.height); state.maxH = Math.max(state.maxH, viewport.height);
+
+                const textContent = await page.getTextContent();
+                const items = textContent.items;
+                items.sort((a, b) => b.transform[5] - a.transform[5] || a.transform[4] - b.transform[4]);
+
+                let lastY = -1;
+                for(let k=0; k<items.length; k++) {
+                    const item = items[k];
+                    const x = item.transform[4]; const y = item.transform[5]; const w = item.width; const h = item.height;
+                    
+                    if(item.str.trim().length > 0) {
+                        textNodes.push({ page: i, text: item.str, x: Math.round(x), y: Math.round(viewport.height - y - h), w: Math.round(w), h: Math.round(h) });
+                    }
+                    margins.left = Math.min(margins.left, x); margins.right = Math.max(margins.right, x + w);
+                    margins.bottom = Math.max(margins.bottom, viewport.height - y); margins.top = Math.min(margins.top, viewport.height - (y + h));
+
+                    if (/_{3,}/.test(item.str)) {
+                        let label = "Fill-in";
+                        if(k > 0) {
+                            const prev = items[k-1];
+                            if(Math.abs(prev.transform[5] - y) < 5) {
+                                if (x - (prev.transform[4] + prev.width) < 50) label = prev.str.replace(/[:.]/g, '').trim();
+                            }
+                        }
+                        fields.push({ id: `under_${i}_${Math.random().toString(36).slice(2)}`, key: label, prediction: inferSemanticType(label), page: i, source: "Underscore", uiType: "input", rect: { x: x, y: viewport.height - y - h + 2, w: w, h: h } });
+                    }
+                    if (lastY !== -1 && Math.abs(y - lastY) > 5) { totalLineHeight += Math.abs(y - lastY); totalLines++; }
+                    lastY = y;
+                }
+
+                for (let k = 0; k < items.length - 1; k++) {
+                    const curr = items[k]; const next = items[k+1];
+                    if (Math.abs(curr.transform[5] - next.transform[5]) < 5) {
+                        const gap = next.transform[4] - (curr.transform[4] + curr.width);
+                        if (gap > 20 && gap < 200) {
+                            const context = curr.str.trim();
+                            if (context.length > 2 && !/[.]$/.test(context)) {
+                                const cleanLabel = context.replace(/[:]/g, '').trim();
+                                fields.push({ id: `gap_${i}_${k}`, key: cleanLabel, prediction: inferSemanticType(cleanLabel), page: i, source: "Gap", uiType: "input", rect: { x: curr.transform[4] + curr.width + 2, y: viewport.height - curr.transform[5] - 14, w: gap - 4, h: 18 } });
+                            }
+                        }
+                    }
+                }
+
+                const ops = await page.getOperatorList();
+                const fn = ops.fnArray; const args = ops.argsArray;
+                for (let j = 0; j < fn.length; j++) {
+                    if (fn[j] === pdfjsLib.OPS.rectangle) {
+                        const [x, y, w, h] = args[j]; const webY = viewport.height - y - h;
+                        if (w > 0 && h > 0) {
+                            if (h < 5 && w > 20) vectors.push({ type: 'line', page: i, rect: { x, y: webY, w, h } });
+                            else if (w < 50 && h < 50) {
+                                vectors.push({ type: 'box', page: i, rect: { x, y: webY, w, h } });
+                                fields.push({ id: `box_${i}_${j}`, key: "Checkbox", prediction: "BOOLEAN", page: i, source: "Vector", uiType: "checkbox", rect: { x, y: webY, w, h } });
+                            }
+                        }
+                    }
+                }
+
+                const annotations = await page.getAnnotations();
+                annotations.filter(a => a.subtype === 'Widget').forEach(a => {
+                     const name = a.fieldName || "Form Field";
+                     fields.push({ id: a.fieldName || "acro_" + Math.random(), key: name, prediction: inferSemanticType(name), page: i, source: "AcroForm", uiType: a.fieldType === 'Btn' ? 'checkbox' : 'input', rect: { x: a.rect[0], y: viewport.height - a.rect[3], w: a.rect[2]-a.rect[0], h: a.rect[3]-a.rect[1] } });
+                });
+            }
+            const avgH = totalLines > 0 ? totalLineHeight / totalLines : 14;
+            return { fields, vectors, text: textNodes, metrics: { avgLineHeight: avgH, avgLeading: avgH * 0.2, margins } };
+        }
+
+        // --- RENDERER ---
+        async function renderFrame() {
+            if (state.isRendering || !state.pdf) return;
+            state.isRendering = true;
+            document.getElementById('page-indicator').innerText = `Page ${state.pageNum}`;
+            
+            const page = await state.pdf.getPage(state.pageNum);
+            const baseViewport = page.getViewport({ scale: 1.0 });
+            
+            if (state.autoFit) {
+                const containerW = els.container.clientWidth - 40;
+                const containerH = els.container.clientHeight - 40;
+                const scaleW = containerW / baseViewport.width;
+                const scaleH = containerH / baseViewport.height;
+                state.scale = Math.max(0.5, Math.min(Math.min(scaleW, scaleH), 2.0));
+                
+                els.btnFit.classList.add('bg-blue-100');
+                els.intelFit.innerText = "Auto Fit";
+                els.intelFit.className = "text-[9px] font-bold uppercase bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded";
+            } else {
+                els.btnFit.classList.remove('bg-blue-100');
+                els.intelFit.innerText = "Manual Zoom";
+                els.intelFit.className = "text-[9px] font-bold uppercase bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded";
+            }
+
+            document.getElementById('zoom-level').innerText = Math.round(state.scale * 100) + '%';
+            els.intelDims.innerText = `${Math.round(baseViewport.width)} x ${Math.round(baseViewport.height)} pt`;
+
+            const viewport = page.getViewport({ scale: state.scale });
+            els.canvas.height = viewport.height; els.canvas.width = viewport.width;
+            
+            await page.render({ canvasContext: els.ctx, viewport: viewport }).promise;
+            drawOverlayLayer(viewport);
+            
+            if(state.globalSync) syncAllViews();
+            
+            state.isRendering = false;
+        }
+
+        function drawOverlayLayer(viewport) {
+            const ctx = els.ctx;
+            ctx.save();
+            ctx.scale(state.scale, state.scale);
+            const m = state.layout.margins;
+            if (m) { ctx.strokeStyle = 'rgba(37, 99, 235, 0.05)'; ctx.lineWidth = 1; ctx.strokeRect(m.left, m.top, m.right - m.left, m.bottom - m.top); }
+            state.vectors.filter(v => v.page === state.pageNum).forEach(v => { ctx.strokeStyle = '#7c3aed'; ctx.lineWidth = 1; ctx.setLineDash([]); ctx.strokeRect(v.rect.x, v.rect.y, v.rect.w, v.rect.h); });
+            state.schema.filter(f => f.page === state.pageNum).forEach(f => {
+                let color = '#2563eb';
+                if (f.source === 'Gap') color = '#f59e0b';
+                if (f.source === 'Vector') color = '#7c3aed';
+                ctx.fillStyle = color + '20'; ctx.strokeStyle = color; ctx.lineWidth = 1.5;
+                if (f.source === 'Gap') ctx.setLineDash([4, 4]); else ctx.setLineDash([]);
+                ctx.fillRect(f.rect.x, f.rect.y, f.rect.w, f.rect.h); ctx.strokeRect(f.rect.x, f.rect.y, f.rect.w, f.rect.h);
+            });
+            ctx.restore();
+        }
+
+        function handleMouseMove(e) {
+            if (!state.pdf) return;
+            const rect = els.canvas.getBoundingClientRect();
+            const sx = els.canvas.width / rect.width;
+            const sy = els.canvas.height / rect.height;
+            const mx = (e.clientX - rect.left) * sx / state.scale;
+            const my = (e.clientY - rect.top) * sy / state.scale;
+            const hit = state.schema.filter(f => f.page === state.pageNum).find(f => {
+                return (mx >= f.rect.x && mx <= f.rect.x + f.rect.w && my >= f.rect.y && my <= f.rect.y + f.rect.h);
+            });
+            if (hit) {
+                els.canvas.style.cursor = 'pointer'; els.tooltip.classList.remove('hidden');
+                els.tooltip.style.left = `${e.clientX}px`; els.tooltip.style.top = `${e.clientY}px`;
+                const metaEl = document.getElementById('tooltip-meta');
+                document.getElementById('tooltip-title').innerText = hit.key;
+                document.getElementById('tooltip-coords').innerText = `x:${Math.round(hit.rect.x)} y:${Math.round(hit.rect.y)}`;
+                metaEl.innerText = `${hit.source.toUpperCase()}  ${hit.prediction}`;
+                metaEl.className = hit.source === 'Gap' ? "text-xs font-bold px-1.5 py-0.5 rounded w-fit mt-1 bg-amber-100 text-amber-700" : (hit.source === 'Vector' ? "text-xs font-bold px-1.5 py-0.5 rounded w-fit mt-1 bg-violet-100 text-violet-700" : "text-xs font-bold px-1.5 py-0.5 rounded w-fit mt-1 bg-blue-100 text-blue-700");
+            } else {
+                if(!state.drag.active) els.canvas.style.cursor = 'grab'; 
+                els.tooltip.classList.add('hidden');
+            }
+        }
+
+        // --- UTILS ---
+        function getPayload() {
+            if(!state.pdf) return {};
+            const pages = [];
+            for(let i=1; i<=state.pdf.numPages; i++) {
+                pages.push({ page_number: i, fields: state.schema.filter(x => x.page === i), vectors: state.vectors.filter(x => x.page === i), text_content: state.text.filter(x => x.page === i) });
+            }
+            return { meta: state.layout, pages: pages, file_base64: state.fileBase64 };
+        }
+        function generateOpenAPI() { return { "openapi": "3.0.0", "info": { "title": "Paradigm PDF Analysis API", "version": "1.0.0" }, "paths": { "/submit": { "post": { "responses": { "200": { "description": "OK" } } } } } }; }
+        function downloadJSON() { const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(getPayload(), null, 2)); const node = document.createElement('a'); node.setAttribute("href", dataStr); node.setAttribute("download", "analysis.json"); document.body.appendChild(node); node.click(); node.remove(); }
+        function downloadOpenAPI() { const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(generateOpenAPI(), null, 2)); const node = document.createElement('a'); node.setAttribute("href", dataStr); node.setAttribute("download", "openapi.json"); document.body.appendChild(node); node.click(); node.remove(); }
+        function submitData() { console.log("POSTING Payload...", getPayload()); alert("Payload generated and logged to console."); toggleSaveModal(false); }
+        
+        function updateSidebarContent() {
+            // Update Page Field Intel List
+            const fieldsOnPage = state.schema.filter(f => f.page === state.pageNum);
+            const list = els.fieldList;
+            list.innerHTML = '';
+            
+            if(fieldsOnPage.length === 0) {
+                list.innerHTML = `<div class="p-4 text-center text-xs text-slate-400 italic">No fields detected on this page.</div>`;
+            } else {
+                fieldsOnPage.forEach(f => {
+                    const row = document.createElement('div');
+                    row.className = "intel-row px-3 py-2 grid grid-cols-3 gap-2 border-b border-slate-100 last:border-0";
+                    
+                    const label = document.createElement('div');
+                    label.className = "col-span-1 truncate font-medium text-xs text-slate-700";
+                    label.innerText = f.key;
+                    
+                    const type = document.createElement('div');
+                    type.className = "col-span-2 text-xs flex items-center";
+                    
+                    let badgeClass = "bg-slate-100 text-slate-500";
+                    if(f.prediction === "NAME" || f.prediction === "EMAIL") badgeClass = "bg-blue-100 text-blue-700";
+                    else if(f.prediction === "ADDRESS" || f.prediction === "CITY") badgeClass = "bg-amber-100 text-amber-700";
+                    else if(f.prediction === "DATE") badgeClass = "bg-violet-100 text-violet-700";
+                    else if(f.prediction === "BOOLEAN") badgeClass = "bg-emerald-100 text-emerald-700";
+                    
+                    type.innerHTML = `<span class="${badgeClass} px-1.5 py-0.5 rounded text-[10px] font-bold">${f.prediction}</span>`;
+                    
+                    row.appendChild(label);
+                    row.appendChild(type);
+                    list.appendChild(row);
+                });
+            }
+
+            // Update JSON Output (Filtered by Page)
+            const pageData = {
+                page: state.pageNum,
+                fields: fieldsOnPage,
+                vectors: state.vectors.filter(v => v.page === state.pageNum)
+            };
+            els.jsonOut.innerText = JSON.stringify(pageData, null, 2);
+        }
+
+        function renderGeneratedForm() { 
+            const c = document.getElementById('form-content'); c.innerHTML = ''; 
+            const p = {}; state.schema.forEach(s => { if(!p[s.page]) p[s.page]=[]; p[s.page].push(s); }); 
+            Object.keys(p).forEach(pg => { 
+                const h = document.createElement('div'); h.id = `form-header-${pg}`; // ID for Sync
+                h.className = "text-xs font-bold text-slate-400 border-b pb-1 mb-3 mt-6"; h.innerText = `Page ${pg}`; c.appendChild(h); 
+                p[pg].sort((a,b) => a.rect.y - b.rect.y).forEach(f => { const r = document.createElement('div'); r.className = "mb-4"; r.innerHTML=`<label class="block text-xs font-medium text-slate-700 mb-1">${f.key} ${f.prediction!=='TEXT'?`<span class="ml-2 bg-slate-100 text-[9px] px-1 rounded">${f.prediction}</span>`:''}</label><input class="w-full border rounded px-2 py-1 text-sm">`; c.appendChild(r); }); 
+            }); 
+        }
+        
+        async function generateFilmstrip() {
+            const track = document.getElementById('filmstrip-track'); track.innerHTML = '';
+            for(let i=1; i<=state.pdf.numPages; i++) {
+                const w = document.createElement('div'); w.id = `thumb-${i}`; w.className = "flex-shrink-0 cursor-pointer border-2 border-transparent hover:border-blue-500 rounded-md transition bg-white relative group shadow-sm";
+                w.onclick = () => { state.pageNum = i; renderFrame(); };
+                const t = document.createElement('div'); t.className="absolute bottom-1 right-1 bg-slate-800/80 text-white text-[9px] px-1.5 rounded"; t.innerText = i; w.appendChild(t);
+                const cvs = document.createElement('canvas'); const ctx = cvs.getContext('2d');
+                const p = await state.pdf.getPage(i); const vp = p.getViewport({ scale: 0.1 });
+                cvs.width = vp.width; cvs.height = vp.height; w.appendChild(cvs); track.appendChild(w);
+                await p.render({ canvasContext: ctx, viewport: vp }).promise;
+                state.schema.filter(f=>f.page===i).forEach(f=>{ ctx.fillStyle = f.source==='Gap'?'#f59e0b':'#2563eb'; ctx.fillRect(f.rect.x*0.1, f.rect.y*0.1, f.rect.w*0.1, f.rect.h*0.1); });
+                
+                // RESTORED POPOVERS
+                w.onmouseenter = () => { 
+                    els.thumbPopup.classList.remove('hidden'); 
+                    const count = state.schema.filter(f=>f.page===i).length;
+                    els.thumbInfo.innerHTML = `Page ${i}<br><span class="text-blue-600 font-semibold">${count} Fields</span>`; 
+                    const rect = w.getBoundingClientRect(); 
+                    els.thumbPopup.style.left = `${rect.left}px`; 
+                    els.thumbPopup.style.bottom = `${window.innerHeight - rect.top + 10}px`; 
+                };
+                w.onmouseleave = () => els.thumbPopup.classList.add('hidden');
+            }
+        }
+
+        function changePage(d) { const n = state.pageNum+d; if(n>0 && n<=state.pdf.numPages) { state.pageNum=n; renderFrame(); } }
+        function changeZoom(d) { state.scale = Math.max(0.2, state.scale+d); document.getElementById('zoom-level').innerText=Math.round(state.scale*100)+'%'; renderFrame(); }
+    </script>
+</body>
+</html>
